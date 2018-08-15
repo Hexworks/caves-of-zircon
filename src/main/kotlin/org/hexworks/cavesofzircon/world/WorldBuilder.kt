@@ -16,8 +16,13 @@ class WorldBuilder(private val tileGrid: TileGrid) {
 
     private var tiles: MutableMap<Position, GameTile> = mutableMapOf()
 
-    fun build(): World {
+
+    fun makeCaves(): WorldBuilder {
         randomizeTiles().smooth(8)
+        return this
+    }
+
+    fun build(): World {
         return World(tiles.toMap())
     }
 

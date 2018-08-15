@@ -24,7 +24,7 @@ buildscript {
 }
 
 ext {
-    zirconVersion = "2018.3.9-PREVIEW"
+    zirconVersion = "2018.3.12-PREVIEW"
     junitVersion = "4.12"
     mockitoVersion = "1.10.19"
     assertjVersion = "3.6.2"
@@ -60,8 +60,6 @@ dependencies {
     compile libraries.slf4j_api
     compile libraries.slf4j_simple
 
-    compile libraries.zircon_core
-    compile libraries.zircon_jvm
     compile libraries.zircon_swing
 
     testCompile libraries.junit
