@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.world
 
-import org.hexworks.cavesofzircon.tiles.GameTile
-import org.hexworks.cavesofzircon.tiles.GameTiles
+import org.hexworks.cavesofzircon.blocks.GameBlock
+import org.hexworks.cavesofzircon.factory.GameBlockFactory
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.data.Size
@@ -12,46 +12,46 @@ class WorldBuilder(private val size: Size) {
     private val width = size.width
     private val height = size.height
 
-    private var tiles: MutableMap<Position, GameTile> = mutableMapOf()
+    private var blocks: MutableMap<Position, GameBlock> = mutableMapOf()
 
 
     fun makeCaves(): WorldBuilder {
-        randomizeTiles().smooth(8)
+        randomizeBlocks().smooth(8)
         return this
     }
 
     fun build(): World {
-        return World(tiles.toMap(), size)
+        return World(blocks.toMap(), size)
     }
 
-    private fun randomizeTiles(): WorldBuilder {
+    private fun randomizeBlocks(): WorldBuilder {
         size.fetchPositions().forEach { pos ->
-            tiles[pos] = if (Math.random() < 0.5) GameTiles.floor else GameTiles.wall
+            blocks[pos] = if (Math.random() < 0.5) GameBlockFactory.floor() else GameBlockFactory.wall()
         }
         return this
     }
 
     private fun smooth(times: Int): WorldBuilder {
-        val newTiles: MutableMap<Position, GameTile> = mutableMapOf()
+        val newBlocks: MutableMap<Position, GameBlock> = mutableMapOf()
         for (time in 0 until times) {
             for (x in 0 until width) {
                 for (y in 0 until height) {
                     var floors = 0
-                    var rocks = 0
+                    var walls = 0
                     for (ox in -1..1) {
                         for (oy in -1..1) {
                             if (x + ox < 0 || x + ox >= width || y + oy < 0 || y + oy >= height)
                                 continue
-                            if (tiles[Positions.create(x + ox, y + oy)] === GameTiles.floor)
+                            if (blocks[Positions.create(x + ox, y + oy)] == GameBlockFactory.floor())
                                 floors++
                             else
-                                rocks++
+                                walls++
                         }
                     }
-                    newTiles[Positions.create(x, y)] = if (floors >= rocks) GameTiles.floor else GameTiles.wall
+                    newBlocks[Positions.create(x, y)] = if (floors >= walls) GameBlockFactory.floor() else GameBlockFactory.wall()
                 }
             }
-            tiles = newTiles
+            blocks = newBlocks
         }
         return this
     }

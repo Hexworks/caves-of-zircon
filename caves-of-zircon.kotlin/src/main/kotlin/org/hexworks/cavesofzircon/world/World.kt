@@ -1,36 +1,68 @@
 package org.hexworks.cavesofzircon.world
 
-import org.hexworks.cavesofzircon.tiles.GameBlock
-import org.hexworks.cavesofzircon.tiles.GameTile
-import org.hexworks.cavesofzircon.tiles.GameTiles
+import org.hexworks.cavesofzircon.blocks.GameBlock
+import org.hexworks.cavesofzircon.blocks.GameTile
+import org.hexworks.cavesofzircon.factory.GameBlockFactory
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.Sizes
 import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.data.Size
 import org.hexworks.zircon.api.data.impl.Position3D
-import org.hexworks.zircon.api.game.BaseGameArea
+import org.hexworks.zircon.api.game.Cell3D
+import org.hexworks.zircon.api.game.base.BaseGameArea
+import org.hexworks.zircon.api.kotlin.map
 import org.hexworks.zircon.api.util.Maybe
 import org.hexworks.zircon.internal.util.TreeMap
 import org.hexworks.zircon.platform.factory.TreeMapFactory
 
-class World(tiles: Map<Position, GameTile>,
+
+class World(tiles: Map<Position, GameBlock>,
             initialSize: Size) : BaseGameArea<GameTile, GameBlock>() {
 
     private val size3D = Sizes.from2DTo3D(initialSize, 1)
     private val blocks: TreeMap<Position3D, GameBlock> = TreeMapFactory.create()
-    private val filler = GameBlock()
 
-    override val defaultBlock = GameBlock()
+    override val defaultBlock = GameBlockFactory.floor()
     override val size = size3D
 
+    private val width = initialSize.width
+    private val height = initialSize.height
+
     init {
-        tiles.forEach { pos, tile ->
+        tiles.forEach { pos, block ->
             val pos3D = Positions.from2DTo3D(pos)
-            setBlockAt(pos3D, GameBlock(
-                    position = pos3D,
-                    layers = mutableListOf(tile),
-                    emptyTile = GameTiles.floor))
+            setBlockAt(pos3D, block)
         }
+    }
+
+    fun dig(position: Position) {
+        val pos = Positions.from2DTo3D(position)
+        fetchBlockAt(pos).map {
+            if (it.isDiggable()) {
+                setBlockAt(pos, GameBlockFactory.floor())
+            }
+        }
+    }
+
+    fun fetchBlockAt(position: Position): Maybe<GameBlock> {
+        return fetchBlockAt(Positions.from2DTo3D(position))
+    }
+
+    fun findEmptyLocation(): Position3D {
+        var position = Maybe.empty<Position3D>()
+
+        while (position.isPresent.not()) {
+            val pos = Positions.create3DPosition(
+                    x = (Math.random() * width).toInt(),
+                    y = (Math.random() * height).toInt(),
+                    z = 0)
+            fetchBlockAt(pos).map {
+                if(it.isGround()) {
+                    position = Maybe.of(pos)
+                }
+            }
+        }
+        return position.get()
     }
 
     override fun layersPerBlock() = 1
@@ -42,10 +74,10 @@ class World(tiles: Map<Position, GameTile>,
     }
 
     override fun fetchBlockOrDefault(position: Position3D) =
-            blocks.getOrDefault(position, filler.withPosition(position))
+            blocks.getOrDefault(position, defaultBlock)
 
-    override fun fetchBlocks(): Iterable<GameBlock> {
-        return blocks.values.toList()
+    override fun fetchBlocks(): Iterable<Cell3D<GameTile, GameBlock>> {
+        return blocks.map { Cell3D.create(it.key, it.value) }
     }
 
     override fun setBlockAt(position: Position3D, block: GameBlock) {

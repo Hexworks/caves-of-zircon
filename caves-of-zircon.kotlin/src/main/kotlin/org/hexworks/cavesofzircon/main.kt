@@ -23,7 +23,6 @@ fun main(args: Array<String>) {
             .enableBetaFeatures()
             .withSize(Size.create(windowWidth, windowHeight))
             .withDefaultTileset(CP437TilesetResources.wanderlust16x16())
-            .withDebugMode(true)
             .build())
 
 

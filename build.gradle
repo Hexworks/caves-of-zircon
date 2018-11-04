@@ -16,7 +16,7 @@ allprojects {
     }
 
     ext {
-        zirconVersion = "2018.5.8-PREVIEW"
+        zirconVersion = "2018.5.9-PREVIEW"
         junitVersion = "4.12"
         mockitoVersion = "1.10.19"
         assertjVersion = "3.6.2"

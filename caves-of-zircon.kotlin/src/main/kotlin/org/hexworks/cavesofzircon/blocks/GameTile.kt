@@ -1,4 +1,4 @@
-package org.hexworks.cavesofzircon.tiles
+package org.hexworks.cavesofzircon.blocks
 
 import org.hexworks.zircon.api.data.CharacterTile
 
