@@ -1,18 +1,16 @@
 package org.hexworks.cavesofzircon.world
 
 import org.hexworks.cavesofzircon.tiles.GameTile
-import org.hexworks.cavesofzircon.tiles.StaticTile
-import org.hexworks.cavesofzircon.tiles.StaticTile.FLOOR
-import org.hexworks.cavesofzircon.tiles.StaticTile.WALL
+import org.hexworks.cavesofzircon.tiles.GameTiles
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.data.Position
-import org.hexworks.zircon.api.grid.TileGrid
+import org.hexworks.zircon.api.data.Size
 
 
-class WorldBuilder(private val tileGrid: TileGrid) {
+class WorldBuilder(private val size: Size) {
 
-    private val width = tileGrid.size().xLength
-    private val height = tileGrid.size().yLength
+    private val width = size.width
+    private val height = size.height
 
     private var tiles: MutableMap<Position, GameTile> = mutableMapOf()
 
@@ -23,12 +21,12 @@ class WorldBuilder(private val tileGrid: TileGrid) {
     }
 
     fun build(): World {
-        return World(tiles.toMap())
+        return World(tiles.toMap(), size)
     }
 
     private fun randomizeTiles(): WorldBuilder {
-        tileGrid.size().fetchPositions().forEach { pos ->
-            tiles[pos] = if (Math.random() < 0.5) FLOOR.tile else WALL.tile
+        size.fetchPositions().forEach { pos ->
+            tiles[pos] = if (Math.random() < 0.5) GameTiles.floor else GameTiles.wall
         }
         return this
     }
@@ -36,25 +34,21 @@ class WorldBuilder(private val tileGrid: TileGrid) {
     private fun smooth(times: Int): WorldBuilder {
         val newTiles: MutableMap<Position, GameTile> = mutableMapOf()
         for (time in 0 until times) {
-
             for (x in 0 until width) {
                 for (y in 0 until height) {
                     var floors = 0
                     var rocks = 0
-
                     for (ox in -1..1) {
                         for (oy in -1..1) {
-                            if (x + ox < 0 || x + ox >= width || y + oy < 0
-                                    || y + oy >= height)
+                            if (x + ox < 0 || x + ox >= width || y + oy < 0 || y + oy >= height)
                                 continue
-
-                            if (tiles[Positions.create(x + ox, y + oy)] === StaticTile.FLOOR.tile)
+                            if (tiles[Positions.create(x + ox, y + oy)] === GameTiles.floor)
                                 floors++
                             else
                                 rocks++
                         }
                     }
-                    newTiles[Positions.create(x, y)] = if (floors >= rocks) StaticTile.FLOOR.tile else StaticTile.WALL.tile
+                    newTiles[Positions.create(x, y)] = if (floors >= rocks) GameTiles.floor else GameTiles.wall
                 }
             }
             tiles = newTiles

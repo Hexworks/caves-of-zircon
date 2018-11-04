@@ -4,8 +4,10 @@ import org.hexworks.cavesofzircon.view.StartView
 import org.hexworks.cavesofzircon.view.View
 import org.hexworks.zircon.api.AppConfigs
 import org.hexworks.zircon.api.CP437TilesetResources
+import org.hexworks.zircon.api.StyleSets
 import org.hexworks.zircon.api.SwingApplications
 import org.hexworks.zircon.api.data.Size
+import org.hexworks.zircon.api.kotlin.onInput
 import java.awt.Toolkit
 
 fun main(args: Array<String>) {
@@ -16,20 +18,29 @@ fun main(args: Array<String>) {
     val windowWidth = screenSize.width.div(tileSize).times(0.95).toInt()
     val windowHeight = screenSize.height.div(tileSize).times(0.95).toInt()
 
+    StyleSets.defaultStyle()
     val grid = SwingApplications.startTileGrid(AppConfigs.newConfig()
-            .defaultSize(Size.create(windowWidth, windowHeight))
-            .defaultTileset(CP437TilesetResources.wanderlust16x16())
-            .debugMode(true)
+            .enableBetaFeatures()
+            .withSize(Size.create(windowWidth, windowHeight))
+            .withDefaultTileset(CP437TilesetResources.wanderlust16x16())
+            .withDebugMode(true)
             .build())
 
 
     var currentView: View = StartView(grid)
 
     grid.onInput { input ->
-        currentView = currentView.respondToUserInput(input)
-        currentView.display()
+        try {
+            val prevView = currentView
+            currentView = currentView.respondToUserInput(input)
+            if (prevView !== currentView) {
+                currentView.display()
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
-
+    
     currentView.display()
 
 

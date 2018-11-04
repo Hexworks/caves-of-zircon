@@ -1,0 +1,15 @@
+apply plugin: 'kotlin'
+
+dependencies {
+    compile libraries.kotlin_stdlib
+    compile libraries.kotlin_reflect
+
+    compile libraries.slf4j_api
+    compile libraries.slf4j_simple
+
+    compile libraries.zircon
+
+    testCompile libraries.junit
+    testCompile libraries.mockito
+    testCompile libraries.assertj
+}

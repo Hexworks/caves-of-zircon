@@ -14,7 +14,7 @@ class WinView(private val tileGrid: TileGrid) : View {
 
     init {
         screen.addComponent(Components.label()
-                .text("You won. Press [enter] to restart.")
+                .withText("You won. Press [enter] to restart.")
                 .build())
     }
 
