@@ -15,9 +15,9 @@ class PlayView(private val tileGrid: TileGrid) : View {
 
     private val screenSize = tileGrid.size
     private val screen = Screens.createScreenFor(tileGrid)
-    private val world = WorldBuilder(Sizes.create(150, 100))
+    private val world = WorldBuilder(screenSize + screenSize)
             .makeCaves()
-            .build()
+            .build(Sizes.from2DTo3D(screenSize, 1))
     private val creatureFactory = CreatureFactory(world)
     private val gameComponent: GameComponent<GameTile, GameBlock>
     private val player = creatureFactory.newPlayer()
@@ -40,36 +40,32 @@ class PlayView(private val tileGrid: TileGrid) : View {
     }
 
     override fun respondToUserInput(input: Input): View {
-        val screenPos = player.position - gameComponent.visibleOffset().to2DPosition()
+        val screenPos = player.position - world.visibleOffset().to2DPosition()
         return when (input.inputType()) {
             Enter -> WinView(tileGrid)
             Escape -> LoseView(tileGrid)
             ArrowUp -> {
-                if (screenPos.y < screenSize.height / 2) {
-                    gameComponent.scrollOneBackward()
+                if (player.moveBy(Positions.create(0, -1)) && screenPos.y < screenSize.height / 2) {
+                    world.scrollOneBackward()
                 }
-                player.moveBy(Positions.create(0, -1))
                 this
             }
             ArrowDown -> {
-                if (screenPos.y > screenSize.height / 2) {
-                    gameComponent.scrollOneForward()
+                if (player.moveBy(Positions.create(0, 1)) && screenPos.y > screenSize.height / 2) {
+                    world.scrollOneForward()
                 }
-                player.moveBy(Positions.create(0, 1))
                 this
             }
             ArrowLeft -> {
-                if (screenPos.x > screenSize.width / 2) {
-                    gameComponent.scrollOneLeft()
+                if (player.moveBy(Positions.create(-1, 0)) && screenPos.x < screenSize.width / 2) {
+                    world.scrollOneLeft()
                 }
-                player.moveBy(Positions.create(-1, 0))
                 this
             }
             ArrowRight -> {
-                if (screenPos.x < screenSize.width / 2) {
-                    gameComponent.scrollOneRight()
+                if (player.moveBy(Positions.create(1, 0)) && screenPos.x > screenSize.width / 2) {
+                    world.scrollOneRight()
                 }
-                player.moveBy(Positions.create(1, 0))
                 this
             }
             else -> this

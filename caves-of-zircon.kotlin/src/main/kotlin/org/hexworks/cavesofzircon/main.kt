@@ -15,8 +15,8 @@ fun main(args: Array<String>) {
     val tileSize = 16
     val screenSize = Toolkit.getDefaultToolkit().screenSize
 
-    val windowWidth = screenSize.width.div(tileSize).times(0.95).toInt()
-    val windowHeight = screenSize.height.div(tileSize).times(0.95).toInt()
+    val windowWidth = screenSize.width.div(tileSize).times(0.6).toInt()
+    val windowHeight = screenSize.height.div(tileSize).times(0.6).toInt()
 
     StyleSets.defaultStyle()
     val grid = SwingApplications.startTileGrid(AppConfigs.newConfig()

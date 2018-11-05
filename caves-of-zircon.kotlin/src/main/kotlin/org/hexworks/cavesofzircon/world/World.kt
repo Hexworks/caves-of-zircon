@@ -4,10 +4,9 @@ import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.blocks.GameTile
 import org.hexworks.cavesofzircon.factory.GameBlockFactory
 import org.hexworks.zircon.api.Positions
-import org.hexworks.zircon.api.Sizes
 import org.hexworks.zircon.api.data.Position
-import org.hexworks.zircon.api.data.Size
 import org.hexworks.zircon.api.data.impl.Position3D
+import org.hexworks.zircon.api.data.impl.Size3D
 import org.hexworks.zircon.api.game.Cell3D
 import org.hexworks.zircon.api.game.base.BaseGameArea
 import org.hexworks.zircon.api.kotlin.map
@@ -17,16 +16,15 @@ import org.hexworks.zircon.platform.factory.TreeMapFactory
 
 
 class World(tiles: Map<Position, GameBlock>,
-            initialSize: Size) : BaseGameArea<GameTile, GameBlock>() {
+            visibleSize: Size3D,
+            actualSize: Size3D) : BaseGameArea<GameTile, GameBlock>(visibleSize, actualSize) {
 
-    private val size3D = Sizes.from2DTo3D(initialSize, 1)
     private val blocks: TreeMap<Position3D, GameBlock> = TreeMapFactory.create()
 
     override val defaultBlock = GameBlockFactory.floor()
-    override val size = size3D
 
-    private val width = initialSize.width
-    private val height = initialSize.height
+    private val width = actualSize.xLength
+    private val height = actualSize.yLength
 
     init {
         tiles.forEach { pos, block ->
@@ -53,11 +51,11 @@ class World(tiles: Map<Position, GameBlock>,
 
         while (position.isPresent.not()) {
             val pos = Positions.create3DPosition(
-                    x = (Math.random() * width).toInt(),
-                    y = (Math.random() * height).toInt(),
+                    x = (Math.random() * visibleSize().xLength).toInt(),
+                    y = (Math.random() * visibleSize().yLength).toInt(),
                     z = 0)
             fetchBlockAt(pos).map {
-                if(it.isGround()) {
+                if (it.isGround()) {
                     position = Maybe.of(pos)
                 }
             }
@@ -81,8 +79,8 @@ class World(tiles: Map<Position, GameBlock>,
     }
 
     override fun setBlockAt(position: Position3D, block: GameBlock) {
-        require(size.containsPosition(position)) {
-            "The supplied position ($position) is not within the size ($size3D) of this game area."
+        require(actualSize().containsPosition(position)) {
+            "The supplied position ($position) is not within the size (${actualSize()}) of this game area."
         }
         val layerCount = block.layers.size
         require(layerCount == layersPerBlock()) {

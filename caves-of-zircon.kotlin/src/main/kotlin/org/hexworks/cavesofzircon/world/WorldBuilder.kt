@@ -3,8 +3,10 @@ package org.hexworks.cavesofzircon.world
 import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.factory.GameBlockFactory
 import org.hexworks.zircon.api.Positions
+import org.hexworks.zircon.api.Sizes
 import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.data.Size
+import org.hexworks.zircon.api.data.impl.Size3D
 
 
 class WorldBuilder(private val size: Size) {
@@ -20,8 +22,11 @@ class WorldBuilder(private val size: Size) {
         return this
     }
 
-    fun build(): World {
-        return World(blocks.toMap(), size)
+    fun build(visibleSize: Size3D): World {
+        return World(
+                tiles = blocks.toMap(),
+                visibleSize = visibleSize,
+                actualSize = Sizes.from2DTo3D(size, 1))
     }
 
     private fun randomizeBlocks(): WorldBuilder {

@@ -20,20 +20,19 @@ class Creature(private val world: World,
         world.dig(position)
     }
 
-    fun moveBy(position: Position) {
+    fun moveBy(position: Position): Boolean {
         val oldBlock = world.fetchBlockAt(this.position).get()
         val newPos = this.position + position
-        println("============================================")
-        println("old pos: ${this.position}, new pos: $newPos")
+        var moved = false
         world.fetchBlockAt(newPos).map { newBlock ->
-            println("block found at $newPos, trying to enter...")
             if (ai.onEnter(newPos, newBlock)) {
-                println("Can enter! Moving to new position...")
                 oldBlock.clearTile()
                 newBlock.setTile(tile)
                 this.position = newPos
+                moved = true
             }
         }
+        return moved
     }
 
 }
