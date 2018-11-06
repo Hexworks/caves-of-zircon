@@ -23,5 +23,10 @@ object GameTileRepository {
             .withForegroundColor(TileColor.fromString("#ffffff"))
             .buildCharacterTile())
 
+    val fungus = GameTile(Tiles.newBuilder()
+            .withCharacter('f')
+            .withForegroundColor(TileColor.fromString("#4B9051"))
+            .buildCharacterTile())
+
     val empty = GameTile(Tiles.empty())
 }

@@ -11,6 +11,7 @@ import org.hexworks.zircon.api.grid.TileGrid
 import org.hexworks.zircon.api.input.Input
 import org.hexworks.zircon.api.input.InputType.*
 
+
 class PlayView(private val tileGrid: TileGrid) : View {
 
     private val screenSize = tileGrid.size
@@ -20,7 +21,7 @@ class PlayView(private val tileGrid: TileGrid) : View {
             .build(Sizes.from2DTo3D(screenSize, 1))
     private val creatureFactory = CreatureFactory(world)
     private val gameComponent: GameComponent<GameTile, GameBlock>
-    private val player = creatureFactory.newPlayer()
+    private var player = creatureFactory.newPlayer()
 
     init {
         gameComponent = GameComponents.newGameComponentBuilder<GameTile, GameBlock>()
@@ -29,10 +30,11 @@ class PlayView(private val tileGrid: TileGrid) : View {
                 .withProjectionMode(ProjectionMode.TOP_DOWN)
                 .build()
         screen.addComponent(gameComponent)
-
         screen.display()
-
         screen.applyColorTheme(ColorThemes.capturedByPirates())
+        for (i in 0..7) {
+            creatureFactory.newFungus()
+        }
     }
 
     override fun display() {
@@ -41,7 +43,7 @@ class PlayView(private val tileGrid: TileGrid) : View {
 
     override fun respondToUserInput(input: Input): View {
         val screenPos = player.position - world.visibleOffset().to2DPosition()
-        return when (input.inputType()) {
+        val result = when (input.inputType()) {
             Enter -> WinView(tileGrid)
             Escape -> LoseView(tileGrid)
             ArrowUp -> {
@@ -70,5 +72,9 @@ class PlayView(private val tileGrid: TileGrid) : View {
             }
             else -> this
         }
+        if (input.isKeyStroke()) {
+            world.update()
+        }
+        return result
     }
 }

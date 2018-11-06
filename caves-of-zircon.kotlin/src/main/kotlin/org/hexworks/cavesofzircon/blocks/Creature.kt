@@ -4,11 +4,12 @@ import org.hexworks.cavesofzircon.ai.CreatureAI
 import org.hexworks.cavesofzircon.ai.NoOpAi
 import org.hexworks.cavesofzircon.world.World
 import org.hexworks.zircon.api.data.Position
+import org.hexworks.zircon.api.kotlin.fold
 import org.hexworks.zircon.api.kotlin.map
 
 
 class Creature(private val world: World,
-               initialPosition: Position,
+               initialPosition: Position = Position.unknown(),
                val tile: GameTile,
                var ai: CreatureAI = NoOpAi()) {
 
@@ -18,6 +19,26 @@ class Creature(private val world: World,
 
     fun dig(position: Position) {
         world.dig(position)
+    }
+
+    fun canEnter(position: Position): Boolean {
+        return world.fetchBlockAt(position).fold(whenEmpty = {
+            false
+        }, whenPresent = {
+            it.isGround()
+        })
+    }
+
+    fun update() {
+        ai.onUpdate()
+    }
+
+    fun moveTo(position: Position): Boolean {
+        this.position = position
+        world.fetchBlockAt(position).map {
+            it.setTile(tile)
+        }
+        return true
     }
 
     fun moveBy(position: Position): Boolean {
@@ -33,6 +54,10 @@ class Creature(private val world: World,
             }
         }
         return moved
+    }
+
+    fun attack(other: Creature) {
+        world.remove(other)
     }
 
 }

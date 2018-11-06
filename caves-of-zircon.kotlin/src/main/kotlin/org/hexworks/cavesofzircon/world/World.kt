@@ -1,5 +1,6 @@
 package org.hexworks.cavesofzircon.world
 
+import org.hexworks.cavesofzircon.blocks.Creature
 import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.blocks.GameTile
 import org.hexworks.cavesofzircon.factory.GameBlockFactory
@@ -20,11 +21,9 @@ class World(tiles: Map<Position, GameBlock>,
             actualSize: Size3D) : BaseGameArea<GameTile, GameBlock>(visibleSize, actualSize) {
 
     private val blocks: TreeMap<Position3D, GameBlock> = TreeMapFactory.create()
+    private val creatures: MutableList<Creature> = mutableListOf()
 
     override val defaultBlock = GameBlockFactory.floor()
-
-    private val width = actualSize.xLength
-    private val height = actualSize.yLength
 
     init {
         tiles.forEach { pos, block ->
@@ -42,17 +41,30 @@ class World(tiles: Map<Position, GameBlock>,
         }
     }
 
-    fun fetchBlockAt(position: Position): Maybe<GameBlock> {
-        return fetchBlockAt(Positions.from2DTo3D(position))
+    fun creature(position: Position): Maybe<Creature> {
+        return Maybe.ofNullable(creatures.firstOrNull { it.position == position })
     }
 
-    fun findEmptyLocation(): Position3D {
+    fun remove(other: Creature) {
+        creatures.remove(other)
+        fetchBlockAt(other.position).map {
+            it.clearTile()
+        }
+    }
+
+    fun update() {
+        creatures.toList().forEach {
+            it.update()
+        }
+    }
+
+    fun addAtEmptyLocation(creature: Creature, size: Size3D = actualSize()) {
         var position = Maybe.empty<Position3D>()
 
         while (position.isPresent.not()) {
             val pos = Positions.create3DPosition(
-                    x = (Math.random() * visibleSize().xLength).toInt(),
-                    y = (Math.random() * visibleSize().yLength).toInt(),
+                    x = (Math.random() * size.xLength).toInt(),
+                    y = (Math.random() * size.yLength).toInt(),
                     z = 0)
             fetchBlockAt(pos).map {
                 if (it.isGround()) {
@@ -60,7 +72,12 @@ class World(tiles: Map<Position, GameBlock>,
                 }
             }
         }
-        return position.get()
+        creature.moveTo(position.get().to2DPosition())
+        creatures.add(creature)
+    }
+
+    fun fetchBlockAt(position: Position): Maybe<GameBlock> {
+        return fetchBlockAt(Positions.from2DTo3D(position))
     }
 
     override fun layersPerBlock() = 1

@@ -1,24 +1,29 @@
 package org.hexworks.cavesofzircon.factory
 
+import org.hexworks.cavesofzircon.ai.FungusAI
 import org.hexworks.cavesofzircon.ai.PlayerAI
 import org.hexworks.cavesofzircon.blocks.Creature
 import org.hexworks.cavesofzircon.repository.GameTileRepository
 import org.hexworks.cavesofzircon.world.World
-import org.hexworks.zircon.api.kotlin.map
 
 
 class CreatureFactory(private val world: World) {
 
     fun newPlayer(): Creature {
-        val position = world.findEmptyLocation()
         val player = Creature(
-                initialPosition = position.to2DPosition(),
                 world = world,
                 tile = GameTileRepository.player)
-        world.fetchBlockAt(position).map {
-            it.setTile(player.tile)
-        }
-        player.ai = PlayerAI(player)
+        player.ai = PlayerAI(player, world)
+        world.addAtEmptyLocation(player, world.visibleSize())
         return player
+    }
+
+    fun newFungus(): Creature {
+        val fungus = Creature(
+                world = world,
+                tile = GameTileRepository.fungus)
+        world.addAtEmptyLocation(fungus)
+        fungus.ai = FungusAI(fungus, this)
+        return fungus
     }
 }

@@ -20,6 +20,8 @@ class GameBlock(private var tile: GameTile,
 
     fun isGround() = tile === GameTileRepository.floor
 
+    fun hasCreature() = tile === GameTileRepository.fungus
+
     fun setTile(tile: GameTile) {
         this.tile = tile
     }
