@@ -7,9 +7,16 @@ dependencies {
     compile libraries.slf4j_api
     compile libraries.slf4j_simple
 
-    compile libraries.zircon
+    compile libraries.zircon_core_jvm
+    compile libraries.zircon_jvm_swing
 
     testCompile libraries.junit
     testCompile libraries.mockito
     testCompile libraries.assertj
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 }

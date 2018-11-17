@@ -3,9 +3,9 @@ package org.hexworks.cavesofzircon.blocks
 import org.hexworks.cavesofzircon.ai.CreatureAI
 import org.hexworks.cavesofzircon.ai.NoOpAi
 import org.hexworks.cavesofzircon.world.World
+import org.hexworks.cobalt.datatypes.extensions.fold
+import org.hexworks.cobalt.datatypes.extensions.map
 import org.hexworks.zircon.api.data.Position
-import org.hexworks.zircon.api.kotlin.fold
-import org.hexworks.zircon.api.kotlin.map
 
 
 class Creature(private val world: World,

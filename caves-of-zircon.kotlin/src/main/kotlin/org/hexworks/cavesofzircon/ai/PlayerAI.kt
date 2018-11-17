@@ -3,8 +3,8 @@ package org.hexworks.cavesofzircon.ai
 import org.hexworks.cavesofzircon.blocks.Creature
 import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.world.World
+import org.hexworks.cobalt.datatypes.extensions.map
 import org.hexworks.zircon.api.data.Position
-import org.hexworks.zircon.api.kotlin.map
 
 class PlayerAI(private val player: Creature,
                private val world: World) : CreatureAI {

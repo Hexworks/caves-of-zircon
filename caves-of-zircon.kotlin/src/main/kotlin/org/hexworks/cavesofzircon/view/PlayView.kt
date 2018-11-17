@@ -30,7 +30,6 @@ class PlayView(private val tileGrid: TileGrid) : View {
                 .withProjectionMode(ProjectionMode.TOP_DOWN)
                 .build()
         screen.addComponent(gameComponent)
-        screen.display()
         screen.applyColorTheme(ColorThemes.capturedByPirates())
         for (i in 0..7) {
             creatureFactory.newFungus()

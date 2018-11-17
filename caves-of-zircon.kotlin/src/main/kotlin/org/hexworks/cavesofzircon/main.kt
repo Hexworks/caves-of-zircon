@@ -2,6 +2,7 @@ package org.hexworks.cavesofzircon
 
 import org.hexworks.cavesofzircon.view.StartView
 import org.hexworks.cavesofzircon.view.View
+import org.hexworks.cobalt.events.api.Subscription
 import org.hexworks.zircon.api.AppConfigs
 import org.hexworks.zircon.api.CP437TilesetResources
 import org.hexworks.zircon.api.StyleSets
@@ -9,6 +10,8 @@ import org.hexworks.zircon.api.SwingApplications
 import org.hexworks.zircon.api.data.Size
 import org.hexworks.zircon.api.kotlin.onInput
 import java.awt.Toolkit
+
+lateinit var subscription: Subscription
 
 fun main(args: Array<String>) {
 
@@ -28,7 +31,8 @@ fun main(args: Array<String>) {
 
     var currentView: View = StartView(grid)
 
-    grid.onInput { input ->
+    subscription = grid.onInput { input ->
+        println("input was: $input")
         try {
             val prevView = currentView
             currentView = currentView.respondToUserInput(input)
@@ -39,8 +43,7 @@ fun main(args: Array<String>) {
             e.printStackTrace()
         }
     }
-    
-    currentView.display()
 
+    currentView.display()
 
 }
