@@ -1,0 +1,15 @@
+apply plugin: 'java'
+
+dependencies {
+    compile libraries.slf4j_api
+    compile libraries.slf4j_simple
+
+    compile libraries.zircon_core_jvm
+    compile libraries.zircon_jvm_swing
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
