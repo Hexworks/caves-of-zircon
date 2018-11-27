@@ -1,7 +1,7 @@
-package ctest.commands
+package org.hexworks.cavesofzircon.commands
 
-import ctest.Context
-import ctest.entities.Entity
+import org.hexworks.cavesofzircon.world.Context
+import org.hexworks.cavesofzircon.entities.Entity
 
 interface Command {
 

@@ -3,9 +3,12 @@ package org.hexworks.cavesofzircon.world
 import org.hexworks.cavesofzircon.blocks.Creature
 import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.blocks.GameTile
+import org.hexworks.cavesofzircon.entities.Entity
 import org.hexworks.cavesofzircon.factory.GameBlockFactory
+import org.hexworks.cobalt.datatypes.Identifier
 import org.hexworks.cobalt.datatypes.Maybe
 import org.hexworks.cobalt.datatypes.extensions.map
+import org.hexworks.cobalt.logging.api.LoggerFactory
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.data.impl.Position3D
@@ -20,10 +23,15 @@ class World(tiles: Map<Position, GameBlock>,
             visibleSize: Size3D,
             actualSize: Size3D) : BaseGameArea<GameTile, GameBlock>(visibleSize, actualSize) {
 
+    override val defaultBlock = GameBlockFactory.floor()
+
+    private val logger = LoggerFactory.getLogger(javaClass)
     private val blocks: TreeMap<Position3D, GameBlock> = TreeMapFactory.create()
+    private val entityPositionLookup = mutableMapOf<Identifier, Position3D>()
+
+    // TODO: remove this
     private val creatures: MutableList<Creature> = mutableListOf()
 
-    override val defaultBlock = GameBlockFactory.floor()
 
     init {
         tiles.forEach { pos, block ->
@@ -31,6 +39,62 @@ class World(tiles: Map<Position, GameBlock>,
             setBlockAt(pos3D, block)
         }
     }
+
+    /**
+     * Moves the given [Entity] to the given [Position3D].
+     * Has no effect if this [World] doesn't contain the given [Entity].
+     * @return true if the entity was moved
+     */
+    fun moveEntity(entity: Entity, position: Position3D): Boolean {
+        return if (actualSize().containsPosition(position) && position.x >= 0 && position.y >= 0) {
+            logger.info("Entity position is valid. Moving entity to: $position")
+            entityPositionLookup[entity.id]?.let {
+                removeEntity(entity)
+                addEntity(entity, position)
+                true
+            } ?: false
+        } else {
+            false
+        }
+    }
+
+    /**
+     * Adds the given [Entity] at the given [Position3D].
+     * Has no effect if this world already contains the
+     * given [Entity].
+     */
+    fun addEntity(entity: Entity, position: Position3D) {
+        if (entityPositionLookup.containsKey(entity.id).not()) {
+            entityPositionLookup[entity.id] = position
+            fetchBlockAt(position).map {
+                it.addEntity(entity)
+            }
+        }
+    }
+
+    fun removeEntity(entity: Entity) {
+        entityPositionLookup[entity.id]?.let { pos ->
+            blocks[pos]?.removeEntity(entity)
+            entityPositionLookup.remove(entity.id)
+        }
+    }
+
+    /**
+     * Returns the entities at the given [Position3D].
+     */
+    fun fetchEntities(position3D: Position3D): List<Entity> {
+        return blocks[position3D]?.fetchEntities() ?: listOf()
+    }
+
+    /**
+     * Finds the [Position3D] of the given [Entity].
+     */
+    fun findPositionOfEntity(entity: Entity): Maybe<Position3D> {
+        return Maybe.ofNullable(entityPositionLookup[entity.id])
+    }
+
+
+    // TODO: remove all below
 
     fun dig(position: Position) {
         val pos = Positions.from2DTo3D(position)
@@ -75,12 +139,15 @@ class World(tiles: Map<Position, GameBlock>,
         creature.moveTo(position.get().to2DPosition())
         creatures.add(creature)
     }
+    // TODO: remove all above
+
+    // implementations for Block
 
     fun fetchBlockAt(position: Position): Maybe<GameBlock> {
         return fetchBlockAt(Positions.from2DTo3D(position))
     }
 
-    override fun layersPerBlock() = 1
+    override fun layersPerBlock() = 2
 
     override fun hasBlockAt(position: Position3D) = blocks.containsKey(position)
 

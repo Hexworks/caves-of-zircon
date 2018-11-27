@@ -1,4 +1,4 @@
-package ctest.properties
+package org.hexworks.cavesofzircon.properties
 
 interface Property {
 

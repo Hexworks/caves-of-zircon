@@ -1,23 +1,36 @@
 package org.hexworks.cavesofzircon.blocks
 
-import org.hexworks.cavesofzircon.entity.Entity
+import org.hexworks.cavesofzircon.entities.Entity
+import org.hexworks.cavesofzircon.extensions.fetchTile
 import org.hexworks.cavesofzircon.repository.GameTileRepository
 import org.hexworks.zircon.api.data.BlockSide
 import org.hexworks.zircon.api.data.base.BlockBase
 
 class GameBlock(private var tile: GameTile,
+                private var entityTile: GameTile = GameTileRepository.empty,
                 private val type: GameBlockType,
                 private val entities: MutableList<Entity> = mutableListOf()) : BlockBase<GameTile>() {
 
-    private val originalTile = tile
-
     override val layers
-        get() = listOf(tile).plus(entities.map { it.tile }).toMutableList()
+        get() = mutableListOf(tile, entityTile)
 
     override fun toString(): String {
         return "GameBlock(name=${type.name})"
     }
 
+    fun addEntity(entity: Entity) {
+        entities.add(entity)
+        entityTile = entity.fetchTile()
+    }
+
+    fun fetchEntities() = entities.toList()
+
+    fun removeEntity(entity: Entity) {
+        entities.remove(entity)
+        entityTile = entities.lastOrNull()?.fetchTile() ?: GameTileRepository.empty
+    }
+
+    // TODO: remove these start
     fun isDiggable() = tile === GameTileRepository.wall
 
     fun isGround() = tile === GameTileRepository.floor
@@ -29,9 +42,8 @@ class GameBlock(private var tile: GameTile,
     }
 
     fun clearTile() {
-        this.tile = originalTile
     }
-
+    // TODO: remove these end
 
     override fun fetchSide(side: BlockSide): GameTile {
         return GameTileRepository.empty

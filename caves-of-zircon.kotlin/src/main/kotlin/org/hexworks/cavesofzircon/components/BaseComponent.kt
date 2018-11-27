@@ -1,14 +1,14 @@
-package ctest.components
+package org.hexworks.cavesofzircon.components
 
-import ctest.Context
-import ctest.commands.Command
+import org.hexworks.cavesofzircon.world.Context
+import org.hexworks.cavesofzircon.commands.Command
 import org.hexworks.cobalt.datatypes.factory.IdentifierFactory
 
 abstract class BaseComponent : Component {
 
     override val id = IdentifierFactory.randomIdentifier()
 
-    override fun respondToEvent(command: Command): Boolean {
+    override fun executeCommand(command: Command): Boolean {
         return false
     }
 

@@ -6,7 +6,11 @@ import org.hexworks.cavesofzircon.repository.GameTileRepository
 
 object GameBlockFactory {
 
-    fun floor() = GameBlock(GameTileRepository.floor, GameBlockType.FLOOR)
+    fun floor() = GameBlock(
+            tile = GameTileRepository.floor,
+            type = GameBlockType.FLOOR)
 
-    fun wall() = GameBlock(GameTileRepository.wall, GameBlockType.WALL)
+    fun wall() = GameBlock(
+            tile = GameTileRepository.wall,
+            type = GameBlockType.WALL)
 }

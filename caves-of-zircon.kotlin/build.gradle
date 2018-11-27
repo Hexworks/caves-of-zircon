@@ -5,7 +5,9 @@ dependencies {
     compile libraries.kotlin_reflect
 
     compile libraries.slf4j_api
-    compile libraries.slf4j_simple
+
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'ch.qos.logback:logback-core:1.2.3'
 
     compile libraries.zircon_core
     compile libraries.zircon_swing

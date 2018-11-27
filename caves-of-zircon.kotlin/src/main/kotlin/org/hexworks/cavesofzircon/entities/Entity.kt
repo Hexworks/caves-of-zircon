@@ -1,10 +1,11 @@
-package ctest.entities
+package org.hexworks.cavesofzircon.entities
 
-import ctest.components.Component
-import ctest.Context
-import ctest.commands.Command
-import ctest.properties.Property
+import org.hexworks.cavesofzircon.commands.Command
+import org.hexworks.cavesofzircon.components.Component
+import org.hexworks.cavesofzircon.properties.Property
+import org.hexworks.cavesofzircon.world.Context
 import org.hexworks.cobalt.datatypes.Identifier
+import org.hexworks.cobalt.datatypes.Maybe
 
 /**
  * An [Entity] is a game object composed of [Property] and
@@ -16,8 +17,10 @@ import org.hexworks.cobalt.datatypes.Identifier
 interface Entity {
 
     val id: Identifier
-    val properties: List<Property>
-    val components: List<Component>
+
+    fun <T : Property> property(klass: Class<T>): Maybe<T>
+
+    fun <T : Component> component(klass: Class<T>): Maybe<T>
 
     /**
      * Adds the given [Command] to this [Entity] for processing.
