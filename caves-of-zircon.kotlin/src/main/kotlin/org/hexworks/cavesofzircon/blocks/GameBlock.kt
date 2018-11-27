@@ -1,16 +1,18 @@
 package org.hexworks.cavesofzircon.blocks
 
+import org.hexworks.cavesofzircon.entity.Entity
 import org.hexworks.cavesofzircon.repository.GameTileRepository
 import org.hexworks.zircon.api.data.BlockSide
 import org.hexworks.zircon.api.data.base.BlockBase
 
 class GameBlock(private var tile: GameTile,
-                private val type: GameBlockType) : BlockBase<GameTile>() {
+                private val type: GameBlockType,
+                private val entities: MutableList<Entity> = mutableListOf()) : BlockBase<GameTile>() {
 
     private val originalTile = tile
 
     override val layers
-        get() = mutableListOf(tile)
+        get() = listOf(tile).plus(entities.map { it.tile }).toMutableList()
 
     override fun toString(): String {
         return "GameBlock(name=${type.name})"
@@ -38,11 +40,8 @@ class GameBlock(private var tile: GameTile,
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (javaClass != other?.javaClass) return false
-
         other as GameBlock
-
         if (type != other.type) return false
-
         return true
     }
 

@@ -7,8 +7,8 @@ dependencies {
     compile libraries.slf4j_api
     compile libraries.slf4j_simple
 
-    compile libraries.zircon_core_jvm
-    compile libraries.zircon_jvm_swing
+    compile libraries.zircon_core
+    compile libraries.zircon_swing
 
     testCompile libraries.junit
     testCompile libraries.mockito

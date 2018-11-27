@@ -4,18 +4,20 @@ import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.blocks.GameTile
 import org.hexworks.cavesofzircon.factory.CreatureFactory
 import org.hexworks.cavesofzircon.world.WorldBuilder
-import org.hexworks.zircon.api.*
+import org.hexworks.zircon.api.GameComponents
+import org.hexworks.zircon.api.Positions
+import org.hexworks.zircon.api.Sizes
 import org.hexworks.zircon.api.game.GameComponent
-import org.hexworks.zircon.api.game.ProjectionMode
+import org.hexworks.zircon.api.game.ProjectionMode.TOP_DOWN
 import org.hexworks.zircon.api.grid.TileGrid
-import org.hexworks.zircon.api.input.Input
-import org.hexworks.zircon.api.input.InputType.*
+import org.hexworks.zircon.api.input.InputType
+import org.hexworks.zircon.api.kotlin.onKeyCombination
+import org.hexworks.zircon.api.kotlin.onKeyStroke
 
 
-class PlayView(private val tileGrid: TileGrid) : View {
+class PlayView(tileGrid: TileGrid) : BaseView(tileGrid) {
 
-    private val screenSize = tileGrid.size
-    private val screen = Screens.createScreenFor(tileGrid)
+    private val screenSize = screen.size
     private val world = WorldBuilder(screenSize + screenSize)
             .makeCaves()
             .build(Sizes.from2DTo3D(screenSize, 1))
@@ -27,53 +29,42 @@ class PlayView(private val tileGrid: TileGrid) : View {
         gameComponent = GameComponents.newGameComponentBuilder<GameTile, GameBlock>()
                 .withGameArea(world)
                 .withVisibleSize(Sizes.from2DTo3D(screenSize, 1))
-                .withProjectionMode(ProjectionMode.TOP_DOWN)
+                .withProjectionMode(TOP_DOWN)
                 .build()
         screen.addComponent(gameComponent)
-        screen.applyColorTheme(ColorThemes.capturedByPirates())
         for (i in 0..7) {
             creatureFactory.newFungus()
         }
-    }
-
-    override fun display() {
-        screen.display()
-    }
-
-    override fun respondToUserInput(input: Input): View {
         val screenPos = player.position - world.visibleOffset().to2DPosition()
-        val result = when (input.inputType()) {
-            Enter -> WinView(tileGrid)
-            Escape -> LoseView(tileGrid)
-            ArrowUp -> {
-                if (player.moveBy(Positions.create(0, -1)) && screenPos.y < screenSize.height / 2) {
-                    world.scrollOneBackward()
-                }
-                this
-            }
-            ArrowDown -> {
-                if (player.moveBy(Positions.create(0, 1)) && screenPos.y > screenSize.height / 2) {
-                    world.scrollOneForward()
-                }
-                this
-            }
-            ArrowLeft -> {
-                if (player.moveBy(Positions.create(-1, 0)) && screenPos.x < screenSize.width / 2) {
-                    world.scrollOneLeft()
-                }
-                this
-            }
-            ArrowRight -> {
-                if (player.moveBy(Positions.create(1, 0)) && screenPos.x > screenSize.width / 2) {
-                    world.scrollOneRight()
-                }
-                this
-            }
-            else -> this
+        screen.onKeyCombination(inputType = InputType.Enter, char = '\n') {
+            WinView(tileGrid).dock()
         }
-        if (input.isKeyStroke()) {
+        screen.onKeyCombination(inputType = InputType.Escape) {
+            LoseView(tileGrid).dock()
+        }
+        screen.onKeyCombination(inputType = InputType.ArrowUp) {
+            if (player.moveBy(Positions.create(0, -1)) && screenPos.y < screenSize.height / 2) {
+                world.scrollOneBackward()
+            }
             world.update()
         }
-        return result
+        screen.onKeyCombination(inputType = InputType.ArrowDown) {
+            if (player.moveBy(Positions.create(0, 1)) && screenPos.y > screenSize.height / 2) {
+                world.scrollOneForward()
+            }
+            world.update()
+        }
+        screen.onKeyCombination(inputType = InputType.ArrowLeft) {
+            if (player.moveBy(Positions.create(-1, 0)) && screenPos.x < screenSize.width / 2) {
+                world.scrollOneLeft()
+            }
+            world.update()
+        }
+        screen.onKeyCombination(inputType = InputType.ArrowRight) {
+            if (player.moveBy(Positions.create(1, 0)) && screenPos.x > screenSize.width / 2) {
+                world.scrollOneRight()
+            }
+            world.update()
+        }
     }
 }

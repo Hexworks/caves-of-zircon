@@ -1,49 +1,28 @@
 package org.hexworks.cavesofzircon
 
 import org.hexworks.cavesofzircon.view.StartView
-import org.hexworks.cavesofzircon.view.View
-import org.hexworks.cobalt.events.api.Subscription
 import org.hexworks.zircon.api.AppConfigs
 import org.hexworks.zircon.api.CP437TilesetResources
-import org.hexworks.zircon.api.StyleSets
 import org.hexworks.zircon.api.SwingApplications
 import org.hexworks.zircon.api.data.Size
-import org.hexworks.zircon.api.kotlin.onInput
 import java.awt.Toolkit
-
-lateinit var subscription: Subscription
 
 fun main(args: Array<String>) {
 
-    val tileSize = 16
+    val tileset = CP437TilesetResources.rogueYun16x16()
+    val tileSize = tileset.width
     val screenSize = Toolkit.getDefaultToolkit().screenSize
 
-    val windowWidth = screenSize.width.div(tileSize).times(0.6).toInt()
-    val windowHeight = screenSize.height.div(tileSize).times(0.6).toInt()
+    val windowWidth = screenSize.width.div(tileSize).times(0.8).toInt()
+    val windowHeight = screenSize.height.div(tileSize).times(0.8).toInt()
 
-    StyleSets.defaultStyle()
     val grid = SwingApplications.startTileGrid(AppConfigs.newConfig()
             .enableBetaFeatures()
             .withSize(Size.create(windowWidth, windowHeight))
-            .withDefaultTileset(CP437TilesetResources.wanderlust16x16())
+            .withDefaultTileset(tileset)
             .build())
 
 
-    var currentView: View = StartView(grid)
-
-    subscription = grid.onInput { input ->
-        println("input was: $input")
-        try {
-            val prevView = currentView
-            currentView = currentView.respondToUserInput(input)
-            if (prevView !== currentView) {
-                currentView.display()
-            }
-        } catch (e: Exception) {
-            e.printStackTrace()
-        }
-    }
-
-    currentView.display()
+    StartView(grid).dock()
 
 }
