@@ -13,13 +13,15 @@ abstract class BaseEntity(val properties: Set<Property> = setOf(),
     override val id = IdentifierFactory.randomIdentifier()
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : Property> property(klass: Class<T>): Maybe<T> {
-        return Maybe.ofNullable(properties.firstOrNull { klass.isInstance(it) } as? T)
+    override fun <T : Property> property(klass: Class<T>): T {
+        return properties.firstOrNull { klass.isInstance(it) } as? T ?: throw NoSuchElementException(
+                "Property '${klass.simpleName}' is not found in entity $this.")
     }
 
     @Suppress("UNCHECKED_CAST")
-    override fun <T : Component> component(klass: Class<T>): Maybe<T> {
-        return Maybe.ofNullable(components.firstOrNull { klass.isInstance(it) } as? T)
+    override fun <T : Component> component(klass: Class<T>): T {
+        return components.firstOrNull { klass.isInstance(it) } as? T?: throw NoSuchElementException(
+                "Component '${klass.simpleName}' is not found in entity $this.")
     }
 
     override fun sendCommand(command: Command) {

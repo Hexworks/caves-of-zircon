@@ -4,6 +4,7 @@ import org.hexworks.cavesofzircon.blocks.Creature
 import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.blocks.GameTile
 import org.hexworks.cavesofzircon.entities.Entity
+import org.hexworks.cavesofzircon.factory.EntityFactory
 import org.hexworks.cavesofzircon.factory.GameBlockFactory
 import org.hexworks.cobalt.datatypes.Identifier
 import org.hexworks.cobalt.datatypes.Maybe
@@ -37,6 +38,7 @@ class World(tiles: Map<Position, GameBlock>,
         tiles.forEach { pos, block ->
             val pos3D = Positions.from2DTo3D(pos)
             setBlockAt(pos3D, block)
+            addEntity(EntityFactory.newWall(), pos3D)
         }
     }
 

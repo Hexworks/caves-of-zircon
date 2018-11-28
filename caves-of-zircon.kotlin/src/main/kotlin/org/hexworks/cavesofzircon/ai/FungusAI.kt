@@ -2,13 +2,13 @@ package org.hexworks.cavesofzircon.ai
 
 import org.hexworks.cavesofzircon.blocks.Creature
 import org.hexworks.cavesofzircon.blocks.GameBlock
-import org.hexworks.cavesofzircon.factory.CreatureFactory
+import org.hexworks.cavesofzircon.factory.EntityFactory
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.data.Position
 
 
 class FungusAI(private val fungus: Creature,
-               private val creatureFactory: CreatureFactory) : CreatureAI {
+               private val entityFactory: EntityFactory) : CreatureAI {
 
     private var spreadcount: Int = 0
 
@@ -28,8 +28,8 @@ class FungusAI(private val fungus: Creature,
         val newPos = Positions.create(x, y)
 
         if (fungus.canEnter(newPos)) {
-            val child = creatureFactory.newFungus()
-            child.moveTo(newPos)
+            val child = entityFactory.newFungus()
+//            child.moveTo(newPos)
             spreadcount++
         }
     }

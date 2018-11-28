@@ -3,7 +3,7 @@ package org.hexworks.cavesofzircon
 import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.blocks.GameTile
 import org.hexworks.cavesofzircon.entities.Entity
-import org.hexworks.cavesofzircon.factory.CreatureFactory
+import org.hexworks.cavesofzircon.factory.EntityFactory
 import org.hexworks.cavesofzircon.world.Context
 import org.hexworks.cavesofzircon.world.WorldBuilder
 import org.hexworks.zircon.api.GameComponents
@@ -20,13 +20,12 @@ class Game(val screen: Screen) {
     private val world = WorldBuilder(screenSize + screenSize)
             .makeCaves()
             .build(Sizes.from2DTo3D(screenSize, 1))
-    private val creatureFactory = CreatureFactory(world)
     private val gameComponent: GameComponent<GameTile, GameBlock> = GameComponents.newGameComponentBuilder<GameTile, GameBlock>()
             .withGameArea(world)
             .withVisibleSize(Sizes.from2DTo3D(screenSize, 1))
             .withProjectionMode(TOP_DOWN)
             .build()
-    private var player = creatureFactory.newPlayer()
+    private var player = EntityFactory.newPlayer()
 
     private val entities = mutableListOf<Entity>()
 
@@ -38,7 +37,7 @@ class Game(val screen: Screen) {
 
     fun addInput(input: Input) {
         entities.forEach {
-            it.update(Context(world, screen, input, player))
+            it.update(Context(world, screen, input, it))
         }
     }
 }

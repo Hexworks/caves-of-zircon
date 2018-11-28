@@ -5,7 +5,6 @@ import org.hexworks.cavesofzircon.components.Component
 import org.hexworks.cavesofzircon.properties.Property
 import org.hexworks.cavesofzircon.world.Context
 import org.hexworks.cobalt.datatypes.Identifier
-import org.hexworks.cobalt.datatypes.Maybe
 
 /**
  * An [Entity] is a game object composed of [Property] and
@@ -18,9 +17,9 @@ interface Entity {
 
     val id: Identifier
 
-    fun <T : Property> property(klass: Class<T>): Maybe<T>
+    fun <T : Property> property(klass: Class<T>): T
 
-    fun <T : Component> component(klass: Class<T>): Maybe<T>
+    fun <T : Component> component(klass: Class<T>): T
 
     /**
      * Adds the given [Command] to this [Entity] for processing.

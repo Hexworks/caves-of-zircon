@@ -7,4 +7,4 @@ import org.hexworks.zircon.api.screen.Screen
 data class Context(val world: World,
                    val screen: Screen,
                    val input: Input,
-                   val player: Entity)
+                   val entity: Entity)

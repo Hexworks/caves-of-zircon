@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.commands
 
-import org.hexworks.cavesofzircon.world.Context
 import org.hexworks.cavesofzircon.entities.Entity
+import org.hexworks.cavesofzircon.world.Context
 
 interface Command {
 
@@ -9,10 +9,24 @@ interface Command {
     val source: Entity
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Command, U : Any> whenTypeIs(perform: (T) -> U, otherwise: () -> U): U {
-        return (this as? T)?.let {
-            perform(this)
-        } ?: otherwise()
+    fun <T : Command, U : Any> whenTypeIs(klass: Class<T>,
+                                          fn: (T) -> U,
+                                          otherwise: () -> U): U {
+        return if (klass.isInstance(this)) {
+            fn(klass.cast(this))
+        } else {
+            otherwise()
+        }
+    }
+
+    fun <T : Command> whenTypeIs(klass: Class<T>,
+                                 fn: (T) -> Unit): Boolean {
+        return if (klass.isInstance(this)) {
+            fn(klass.cast(this))
+            true
+        } else {
+            false
+        }
     }
 }
 
