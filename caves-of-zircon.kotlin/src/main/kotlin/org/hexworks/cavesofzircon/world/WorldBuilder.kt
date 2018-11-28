@@ -16,7 +16,6 @@ class WorldBuilder(private val size: Size) {
 
     private var blocks: MutableMap<Position, GameBlock> = mutableMapOf()
 
-
     fun makeCaves(): WorldBuilder {
         randomizeBlocks().smooth(8)
         return this
@@ -47,10 +46,11 @@ class WorldBuilder(private val size: Size) {
                         for (oy in -1..1) {
                             if (x + ox < 0 || x + ox >= width || y + oy < 0 || y + oy >= height)
                                 continue
-                            if (blocks[Positions.create(x + ox, y + oy)] == GameBlockFactory.floor())
+                            if (blocks[Positions.create(x + ox, y + oy)]!!.isEmptyFloor()) {
                                 floors++
-                            else
+                            } else {
                                 walls++
+                            }
                         }
                     }
                     newBlocks[Positions.create(x, y)] = if (floors >= walls) GameBlockFactory.floor() else GameBlockFactory.wall()

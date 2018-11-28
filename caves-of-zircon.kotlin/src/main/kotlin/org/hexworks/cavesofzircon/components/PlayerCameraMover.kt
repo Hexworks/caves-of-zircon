@@ -5,7 +5,7 @@ import org.hexworks.cavesofzircon.commands.MoveCamera
 import org.hexworks.cobalt.logging.api.LoggerFactory
 import org.hexworks.zircon.api.input.InputType.*
 
-class PlayerCameraHandler : BaseComponent() {
+object PlayerCameraMover : BaseComponent() {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 

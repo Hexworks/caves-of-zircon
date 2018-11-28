@@ -10,3 +10,5 @@ fun Entity.fetchTile(): GameTile {
 }
 
 fun Entity.isPlayer() = property(EntityMetadata::class.java).type == EntityType.PLAYER
+
+fun Entity.occupiesBlock() = property(EntityMetadata::class.java).type.occupiesBlock

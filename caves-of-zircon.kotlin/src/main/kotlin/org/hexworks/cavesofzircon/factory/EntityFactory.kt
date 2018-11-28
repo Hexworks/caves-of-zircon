@@ -1,7 +1,9 @@
 package org.hexworks.cavesofzircon.factory
 
+import org.hexworks.cavesofzircon.components.Diggable
+import org.hexworks.cavesofzircon.components.PlayerCameraMover
 import org.hexworks.cavesofzircon.components.PlayerInputHandler
-import org.hexworks.cavesofzircon.components.PlayerCameraHandler
+import org.hexworks.cavesofzircon.components.PlayerMover
 import org.hexworks.cavesofzircon.entities.Entity
 import org.hexworks.cavesofzircon.entities.GameEntity
 import org.hexworks.cavesofzircon.properties.EntityMetadata
@@ -13,19 +15,20 @@ object EntityFactory {
 
     fun newPlayer(): Entity {
         return GameEntity(
-                entityType = EntityMetadata(
+                metadata = EntityMetadata(
                         name = "player",
                         type = PLAYER,
                         tile = GameTileRepository.player),
                 components = setOf(
-                        PlayerInputHandler(),
-                        PlayerCameraHandler()),
+                        PlayerInputHandler,
+                        PlayerCameraMover,
+                        PlayerMover),
                 properties = setOf())
     }
 
     fun newFungus(): Entity {
         return GameEntity(
-                entityType = EntityMetadata(
+                metadata = EntityMetadata(
                         name = "fungus",
                         type = FUNGUS,
                         tile = GameTileRepository.fungus),
@@ -35,11 +38,12 @@ object EntityFactory {
 
     fun newWall(): Entity {
         return GameEntity(
-                entityType = EntityMetadata(
+                metadata = EntityMetadata(
                         name = "wall",
                         type = WALL,
                         tile = GameTileRepository.wall),
-                components = setOf(),
+                components = setOf(
+                        Diggable),
                 properties = setOf())
     }
 }

@@ -1,14 +1,13 @@
 package org.hexworks.cavesofzircon.world
 
-import org.hexworks.cavesofzircon.blocks.Creature
 import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.blocks.GameTile
 import org.hexworks.cavesofzircon.entities.Entity
-import org.hexworks.cavesofzircon.factory.EntityFactory
 import org.hexworks.cavesofzircon.factory.GameBlockFactory
 import org.hexworks.cobalt.datatypes.Identifier
 import org.hexworks.cobalt.datatypes.Maybe
 import org.hexworks.cobalt.datatypes.extensions.map
+import org.hexworks.cobalt.datatypes.extensions.orElseThrow
 import org.hexworks.cobalt.logging.api.LoggerFactory
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.data.Position
@@ -30,15 +29,13 @@ class World(tiles: Map<Position, GameBlock>,
     private val blocks: TreeMap<Position3D, GameBlock> = TreeMapFactory.create()
     private val entityPositionLookup = mutableMapOf<Identifier, Position3D>()
 
-    // TODO: remove this
-    private val creatures: MutableList<Creature> = mutableListOf()
-
-
     init {
         tiles.forEach { pos, block ->
             val pos3D = Positions.from2DTo3D(pos)
             setBlockAt(pos3D, block)
-            addEntity(EntityFactory.newWall(), pos3D)
+            block.getEntities().forEach {
+                entityPositionLookup[it.id] = pos3D
+            }
         }
     }
 
@@ -75,17 +72,12 @@ class World(tiles: Map<Position, GameBlock>,
     }
 
     fun removeEntity(entity: Entity) {
+        logger.info("Trying to remove $entity from world.")
         entityPositionLookup[entity.id]?.let { pos ->
+            logger.info("Entity $entity found in world. Removing...")
             blocks[pos]?.removeEntity(entity)
             entityPositionLookup.remove(entity.id)
         }
-    }
-
-    /**
-     * Returns the entities at the given [Position3D].
-     */
-    fun fetchEntities(position3D: Position3D): List<Entity> {
-        return blocks[position3D]?.fetchEntities() ?: listOf()
     }
 
     /**
@@ -95,61 +87,25 @@ class World(tiles: Map<Position, GameBlock>,
         return Maybe.ofNullable(entityPositionLookup[entity.id])
     }
 
-
-    // TODO: remove all below
-
-    fun dig(position: Position) {
-        val pos = Positions.from2DTo3D(position)
-        fetchBlockAt(pos).map {
-            if (it.isDiggable()) {
-                setBlockAt(pos, GameBlockFactory.floor())
-            }
-        }
-    }
-
-    fun creature(position: Position): Maybe<Creature> {
-        return Maybe.ofNullable(creatures.firstOrNull { it.position == position })
-    }
-
-    fun remove(other: Creature) {
-        creatures.remove(other)
-        fetchBlockAt(other.position).map {
-            it.clearTile()
-        }
-    }
-
-    fun update() {
-        creatures.toList().forEach {
-            it.update()
-        }
-    }
-
-    fun addAtEmptyLocation(creature: Creature, size: Size3D = actualSize()) {
+    fun findEmptyLocation(size: Size3D = actualSize()): Position3D {
         var position = Maybe.empty<Position3D>()
-
         while (position.isPresent.not()) {
             val pos = Positions.create3DPosition(
                     x = (Math.random() * size.xLength).toInt(),
                     y = (Math.random() * size.yLength).toInt(),
                     z = 0)
             fetchBlockAt(pos).map {
-                if (it.isGround()) {
+                if (it.isOccupied().not()) {
                     position = Maybe.of(pos)
                 }
             }
         }
-        creature.moveTo(position.get().to2DPosition())
-        creatures.add(creature)
-    }
-    // TODO: remove all above
-
-    // implementations for Block
-
-    fun fetchBlockAt(position: Position): Maybe<GameBlock> {
-        return fetchBlockAt(Positions.from2DTo3D(position))
+        logger.info("Empty location found: '${position.get()}'")
+        return position.orElseThrow { NoSuchElementException("No empty space left on this level.") }
     }
 
-    override fun layersPerBlock() = 2
+    // implementations for GameArea
+    override fun layersPerBlock() = 1
 
     override fun hasBlockAt(position: Position3D) = blocks.containsKey(position)
 
