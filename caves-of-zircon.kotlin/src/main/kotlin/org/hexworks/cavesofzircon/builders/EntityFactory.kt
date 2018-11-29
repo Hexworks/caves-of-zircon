@@ -1,14 +1,12 @@
-package org.hexworks.cavesofzircon.factory
+package org.hexworks.cavesofzircon.builders
 
-import org.hexworks.cavesofzircon.components.Diggable
-import org.hexworks.cavesofzircon.components.PlayerCameraMover
-import org.hexworks.cavesofzircon.components.PlayerInputHandler
-import org.hexworks.cavesofzircon.components.PlayerMover
+import org.hexworks.cavesofzircon.components.*
 import org.hexworks.cavesofzircon.entities.Entity
 import org.hexworks.cavesofzircon.entities.GameEntity
-import org.hexworks.cavesofzircon.properties.EntityMetadata
-import org.hexworks.cavesofzircon.properties.EntityType.*
-import org.hexworks.cavesofzircon.repository.GameTileRepository
+import org.hexworks.cavesofzircon.attributes.CombatStats
+import org.hexworks.cavesofzircon.attributes.EntityMetadata
+import org.hexworks.cavesofzircon.attributes.EntityType.*
+import org.hexworks.cavesofzircon.attributes.FungusSpread
 
 
 object EntityFactory {
@@ -23,7 +21,11 @@ object EntityFactory {
                         PlayerInputHandler,
                         PlayerCameraMover,
                         PlayerMover),
-                properties = setOf())
+                attributes = setOf(
+                        CombatStats(
+                                maxHp = 100,
+                                attackValue = 20,
+                                defenseValue = 20)))
     }
 
     fun newFungus(): Entity {
@@ -32,8 +34,15 @@ object EntityFactory {
                         name = "fungus",
                         type = FUNGUS,
                         tile = GameTileRepository.fungus),
-                components = setOf(),
-                properties = setOf())
+                components = setOf(
+                        FungusGrower,
+                        Attackable),
+                attributes = setOf(
+                        FungusSpread(),
+                        CombatStats(
+                                maxHp = 10,
+                                attackValue = 0,
+                                defenseValue = 0)))
     }
 
     fun newWall(): Entity {
@@ -44,6 +53,6 @@ object EntityFactory {
                         tile = GameTileRepository.wall),
                 components = setOf(
                         Diggable),
-                properties = setOf())
+                attributes = setOf())
     }
 }

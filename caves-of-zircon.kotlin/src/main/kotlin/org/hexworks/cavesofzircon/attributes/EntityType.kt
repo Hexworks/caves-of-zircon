@@ -1,4 +1,4 @@
-package org.hexworks.cavesofzircon.properties
+package org.hexworks.cavesofzircon.attributes
 
 enum class EntityType(val occupiesBlock: Boolean) {
     PLAYER(true),

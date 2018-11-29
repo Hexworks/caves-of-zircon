@@ -3,7 +3,7 @@ package org.hexworks.cavesofzircon.blocks
 import org.hexworks.cavesofzircon.entities.Entity
 import org.hexworks.cavesofzircon.extensions.fetchTile
 import org.hexworks.cavesofzircon.extensions.occupiesBlock
-import org.hexworks.cavesofzircon.repository.GameTileRepository
+import org.hexworks.cavesofzircon.builders.GameTileRepository
 import org.hexworks.zircon.api.data.BlockSide
 import org.hexworks.zircon.api.data.base.BlockBase
 

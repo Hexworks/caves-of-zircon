@@ -7,5 +7,5 @@ data class Dig(override val context: Context,
                override val source: Entity,
                val target: Entity) : Command {
 
-    override fun toString() = "Dig out $target."
+    override fun toString() = "Digging out $target."
 }

@@ -1,4 +1,4 @@
-package org.hexworks.cavesofzircon.repository
+package org.hexworks.cavesofzircon.builders
 
 import org.hexworks.cavesofzircon.blocks.GameTile
 import org.hexworks.zircon.api.Tiles
@@ -15,18 +15,30 @@ object GameTileRepository {
 
     val wall = GameTile(Tiles.newBuilder()
             .withCharacter('#')
-            .withForegroundColor(TileColor.fromString("#999999"))
+            .withForegroundColor(ANSITileColor.GRAY)
             .buildCharacterTile())
 
     val player = GameTile(Tiles.newBuilder()
             .withCharacter('@')
-            .withForegroundColor(TileColor.fromString("#ffffff"))
+            .withForegroundColor(ANSITileColor.BRIGHT_WHITE)
             .buildCharacterTile())
 
     val fungus = GameTile(Tiles.newBuilder()
             .withCharacter('f')
-            .withForegroundColor(TileColor.fromString("#4B9051"))
+            .withForegroundColor(ANSITileColor.GREEN)
             .buildCharacterTile())
+
+    val stairsUp = GameTile(Tiles.newBuilder()
+            .withCharacter('<')
+            .withForegroundColor(ANSITileColor.WHITE)
+            .buildCharacterTile())
+
+    val stairsDown = GameTile(Tiles.newBuilder()
+            .withCharacter('>')
+            .withForegroundColor(ANSITileColor.WHITE)
+            .buildCharacterTile())
+
+
 
     val empty = GameTile(Tiles.empty())
 }

@@ -1,4 +1,4 @@
-package org.hexworks.cavesofzircon.factory
+package org.hexworks.cavesofzircon.builders
 
 import org.hexworks.cavesofzircon.blocks.GameBlock
 

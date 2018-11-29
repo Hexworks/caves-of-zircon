@@ -20,8 +20,8 @@ fun main(args: Array<String>) {
             .enableBetaFeatures()
             .withSize(Size.create(windowWidth, windowHeight))
             .withDefaultTileset(tileset)
+            .withDebugMode(true)
             .build())
-
 
     StartView(grid).dock()
 

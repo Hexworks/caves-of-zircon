@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.world
 
 import org.hexworks.cavesofzircon.blocks.GameBlock
-import org.hexworks.cavesofzircon.factory.GameBlockFactory
+import org.hexworks.cavesofzircon.builders.GameBlockFactory
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.Sizes
 import org.hexworks.zircon.api.data.Position

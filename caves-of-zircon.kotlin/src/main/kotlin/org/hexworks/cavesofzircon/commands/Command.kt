@@ -9,9 +9,9 @@ interface Command {
     val source: Entity
 
     @Suppress("UNCHECKED_CAST")
-    fun <T : Command, U : Any> whenTypeIs(klass: Class<T>,
-                                          fn: (T) -> U,
-                                          otherwise: () -> U): U {
+    fun <T : Command, U : Any> whenCommandIs(klass: Class<T>,
+                                             fn: (T) -> U,
+                                             otherwise: () -> U): U {
         return if (klass.isInstance(this)) {
             fn(klass.cast(this))
         } else {
@@ -19,8 +19,8 @@ interface Command {
         }
     }
 
-    fun <T : Command> whenTypeIs(klass: Class<T>,
-                                 fn: (T) -> Unit): Boolean {
+    fun <T : Command> whenCommandIs(klass: Class<T>,
+                                    fn: (T) -> Unit): Boolean {
         return if (klass.isInstance(this)) {
             fn(klass.cast(this))
             true

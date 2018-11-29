@@ -7,5 +7,5 @@ data class Attack(override val context: Context,
                   override val source: Entity,
                   val target: Entity) : Command {
 
-    override fun toString() = "Attack $target."
+    override fun toString() = "Attacking $target."
 }

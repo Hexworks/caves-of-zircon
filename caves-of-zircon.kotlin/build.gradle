@@ -9,6 +9,7 @@ dependencies {
     compile 'ch.qos.logback:logback-classic:1.2.3'
     compile 'ch.qos.logback:logback-core:1.2.3'
 
+    compile libraries.cobalt_databinding
     compile libraries.zircon_core
     compile libraries.zircon_swing
 
