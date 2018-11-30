@@ -9,3 +9,6 @@
 - Explain `data class`es (destructuring the event)
 - Introduce databinding (cobalt)
 - Add `sameLevelNeighbors` and explain the utility of extension functions
+- Introduce `Variation` modifier
+- Explain why using functions is better than variables (`FLOOR` TO `floor()` when `Variation` is added)
+- Introduce extension functions on nullable types

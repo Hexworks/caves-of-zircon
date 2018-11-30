@@ -2,16 +2,15 @@ package org.hexworks.cavesofzircon.world
 
 import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.blocks.GameTile
+import org.hexworks.cavesofzircon.builders.GameBlockFactory
 import org.hexworks.cavesofzircon.entities.Entity
 import org.hexworks.cavesofzircon.events.EntityAddedToWorld
 import org.hexworks.cavesofzircon.events.EntityRemovedFromWorld
-import org.hexworks.cavesofzircon.builders.GameBlockFactory
 import org.hexworks.cobalt.datatypes.Identifier
 import org.hexworks.cobalt.datatypes.Maybe
 import org.hexworks.cobalt.datatypes.extensions.map
 import org.hexworks.cobalt.logging.api.LoggerFactory
 import org.hexworks.zircon.api.Positions
-import org.hexworks.zircon.api.data.Position
 import org.hexworks.zircon.api.data.impl.Position3D
 import org.hexworks.zircon.api.data.impl.Size3D
 import org.hexworks.zircon.api.game.Cell3D
@@ -21,7 +20,7 @@ import org.hexworks.zircon.internal.util.TreeMap
 import org.hexworks.zircon.platform.factory.TreeMapFactory
 
 
-class World(tiles: Map<Position, GameBlock>,
+class World(tiles: Map<Position3D, GameBlock>,
             visibleSize: Size3D,
             actualSize: Size3D) : BaseGameArea<GameTile, GameBlock>(visibleSize, actualSize) {
 
@@ -33,7 +32,7 @@ class World(tiles: Map<Position, GameBlock>,
 
     init {
         tiles.forEach { pos, block ->
-            val pos3D = Positions.from2DTo3D(pos)
+            val pos3D = pos
             setBlockAt(pos3D, block)
             block.getEntities().forEach {
                 entityPositionLookup[it.id] = pos3D
@@ -115,7 +114,7 @@ class World(tiles: Map<Position, GameBlock>,
     }
 
     // implementations for GameArea
-    override fun layersPerBlock() = 1
+    override fun layersPerBlock() = 2
 
     override fun hasBlockAt(position: Position3D) = blocks.containsKey(position)
 

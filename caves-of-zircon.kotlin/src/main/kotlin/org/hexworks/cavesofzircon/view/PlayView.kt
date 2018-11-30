@@ -32,11 +32,12 @@ class PlayView(tileGrid: TileGrid) : BaseView(tileGrid) {
     private val logAreaHeight = screenSize.height / 6
     private val gameAreaWidth = screenSize.width - sidebarWidth
     private val gameAreaHeight = screenSize.height - logAreaHeight
-
+    private val worldSize = Sizes.create3DSize(screenSize.width * 2, screenSize.height * 2, 10)
+    private val visibleSize = Sizes.create3DSize(gameAreaWidth, gameAreaHeight, 1)
     private var player = EntityFactory.newPlayer()
-    private val world = WorldBuilder(screenSize + screenSize)
+    private val world = WorldBuilder(worldSize)
             .makeCaves()
-            .build(Sizes.from2DTo3D(screenSize, 1))
+            .build(visibleSize, worldSize)
     private val game = Game(screen, world)
     private val playerStats = player.property<CombatStats>()
     private val playerHp: TextArea
@@ -86,7 +87,7 @@ class PlayView(tileGrid: TileGrid) : BaseView(tileGrid) {
         logPanel.addComponent(logArea)
         val gameComponent = GameComponents.newGameComponentBuilder<GameTile, GameBlock>()
                 .withGameArea(world)
-                .withVisibleSize(Sizes.create3DSize(gameAreaWidth, gameAreaHeight, 1))
+                .withVisibleSize(visibleSize)
                 .withProjectionMode(TOP_DOWN)
                 .withAlignmentWithin(screen, TOP_RIGHT)
                 .build()

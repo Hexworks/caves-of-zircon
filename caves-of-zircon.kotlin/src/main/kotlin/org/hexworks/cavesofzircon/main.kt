@@ -9,7 +9,7 @@ import java.awt.Toolkit
 
 fun main(args: Array<String>) {
 
-    val tileset = CP437TilesetResources.rogueYun16x16()
+    val tileset = CP437TilesetResources.rexPaint16x16()
     val tileSize = tileset.width
     val screenSize = Toolkit.getDefaultToolkit().screenSize
 

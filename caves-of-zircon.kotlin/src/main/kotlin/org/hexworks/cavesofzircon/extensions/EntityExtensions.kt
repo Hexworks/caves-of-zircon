@@ -1,10 +1,10 @@
 package org.hexworks.cavesofzircon.extensions
 
-import org.hexworks.cavesofzircon.components.Component
-import org.hexworks.cavesofzircon.entities.Entity
+import org.hexworks.cavesofzircon.attributes.Attribute
 import org.hexworks.cavesofzircon.attributes.EntityMetadata
 import org.hexworks.cavesofzircon.attributes.EntityType
-import org.hexworks.cavesofzircon.attributes.Attribute
+import org.hexworks.cavesofzircon.components.Component
+import org.hexworks.cavesofzircon.entities.Entity
 import org.hexworks.cobalt.datatypes.extensions.map
 import org.hexworks.cobalt.datatypes.extensions.orElseThrow
 
@@ -25,4 +25,6 @@ inline fun <reified T : Component> Entity.component(): T = component(T::class.ja
 inline fun <reified T : Attribute> Entity.whenHasProperty(crossinline fn: (T) -> Unit) = property(T::class.java).map(fn)
 
 inline fun <reified T : Component> Entity.whenHasComponent(crossinline fn: (T) -> Unit) = component(T::class.java).map(fn)
+
+fun Entity.isWall() = property<EntityMetadata>().type == EntityType.WALL
 
