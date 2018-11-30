@@ -1,47 +1,96 @@
-allprojects {
-    group "org.hexworks.cavesofzircon"
-    version "2018.1.0-PREVIEW"
+group "org.hexworks.cavesofzircon"
+version "2018.1.0-PREVIEW"
 
-    buildscript {
-        ext.kotlinVersion = "1.3.10"
-        repositories {
-            mavenLocal()
-            mavenCentral()
-            jcenter()
-            maven { url "https://plugins.gradle.org/m2/" }
-        }
-        dependencies {
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
-        }
-    }
-
-    ext {
-        zirconVersion = "2018.5.32-PREVIEW"
-        junitVersion = "4.12"
-        mockitoVersion = "1.10.19"
-        assertjVersion = "3.6.2"
-        slf4jVersion = "1.7.25"
-        cobaltVersion = "2018.0.14-BETA"
-
-        libraries = [
-                kotlin_stdlib     : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
-                kotlin_reflect    : "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion",
-                slf4j_api         : "org.slf4j:slf4j-api:$slf4jVersion",
-                slf4j_simple      : "org.slf4j:slf4j-simple:$slf4jVersion",
-                cobalt_databinding: "org.hexworks.cobalt:cobalt.databinding-jvm:$cobaltVersion",
-                zircon_core       : "org.hexworks.zircon:zircon.core-jvm:$zirconVersion",
-                zircon_swing      : "org.hexworks.zircon:zircon.jvm.swing:$zirconVersion",
-                junit             : "junit:junit:$junitVersion",
-                mockito           : "org.mockito:mockito-all:$mockitoVersion",
-                assertj           : "org.assertj:assertj-core:$assertjVersion"
-        ]
-    }
-
+buildscript {
+    ext.kotlinVersion = "1.3.10"
     repositories {
         mavenLocal()
         mavenCentral()
         jcenter()
-        maven { url 'https://jitpack.io' }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
+        classpath "com.github.jengelman.gradle.plugins:shadow:4.0.2"
     }
 }
 
+ext {
+    zirconVersion = "2018.5.32-PREVIEW"
+    junitVersion = "4.12"
+    mockitoVersion = "1.10.19"
+    assertjVersion = "3.6.2"
+    slf4jVersion = "1.7.25"
+    cobaltVersion = "2018.0.14-BETA"
+
+    libraries = [
+            kotlin_stdlib     : "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion",
+            kotlin_reflect    : "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion",
+            slf4j_api         : "org.slf4j:slf4j-api:$slf4jVersion",
+            slf4j_simple      : "org.slf4j:slf4j-simple:$slf4jVersion",
+            cobalt_databinding: "org.hexworks.cobalt:cobalt.databinding-jvm:$cobaltVersion",
+            zircon_core       : "org.hexworks.zircon:zircon.core-jvm:$zirconVersion",
+            zircon_swing      : "org.hexworks.zircon:zircon.jvm.swing:$zirconVersion",
+            junit             : "junit:junit:$junitVersion",
+            mockito           : "org.mockito:mockito-all:$mockitoVersion",
+            assertj           : "org.assertj:assertj-core:$assertjVersion"
+    ]
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    jcenter()
+    maven { url 'https://jitpack.io' }
+}
+
+apply plugin: 'kotlin'
+apply plugin: "com.github.johnrengelman.shadow"
+
+configurations {
+    shadow
+    compile.extendsFrom provided
+    provided.extendsFrom shadow
+}
+
+shadowJar {
+    classifier = null
+    version = version
+}
+
+artifacts {
+    archives shadowJar
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': "org.hexworks.cavesofzircon.MainKt"
+    }
+}
+
+build.dependsOn(shadowJar)
+
+dependencies {
+    compile libraries.kotlin_stdlib
+    compile libraries.kotlin_reflect
+
+    compile libraries.slf4j_api
+
+    compile 'ch.qos.logback:logback-classic:1.2.3'
+    compile 'ch.qos.logback:logback-core:1.2.3'
+
+    compile libraries.cobalt_databinding
+    compile libraries.zircon_core
+    compile libraries.zircon_swing
+
+    testCompile libraries.junit
+    testCompile libraries.mockito
+    testCompile libraries.assertj
+}
+
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile).all {
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
+}
+	
