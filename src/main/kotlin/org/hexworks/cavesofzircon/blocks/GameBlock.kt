@@ -1,0 +1,64 @@
+package org.hexworks.cavesofzircon.blocks
+
+import org.hexworks.amethyst.api.EntityType
+import org.hexworks.cavesofzircon.builders.GameTileRepository
+import org.hexworks.cavesofzircon.extensions.*
+import org.hexworks.zircon.api.data.BlockSide
+import org.hexworks.zircon.api.data.Tile
+import org.hexworks.zircon.api.data.base.BlockBase
+
+class GameBlock private constructor(private var defaultTile: Tile = GameTileRepository.floor(),
+                                    private val currentEntities: MutableList<GameEntity<EntityType>> = mutableListOf())
+    : BlockBase<Tile>() {
+
+    override val layers
+        get() = mutableListOf(defaultTile, currentEntities.map {
+            it.tile
+        }.lastOrNull() ?: GameTileRepository.EMPTY)
+
+    val isOccupied: Boolean
+        get() = currentEntities.any { it.occupiesBlock }
+
+    val isEmptyFloor: Boolean
+        get() = currentEntities.isEmpty()
+
+    val hasWall: Boolean
+        get() = currentEntities.any { it.isWall }
+
+    val hasStairsUp: Boolean
+        get() = currentEntities.any { it.isStairsUp }
+
+    val hasExit: Boolean
+        get() = currentEntities.any { it.isExit }
+
+    val hasStairsDown: Boolean
+        get() = currentEntities.any { it.isStairsDown }
+
+    val occupier: GameEntity<EntityType>
+        get() = currentEntities.firstOrNull { it.occupiesBlock }
+                ?: throw NoSuchElementException("This block is not occupied.")
+
+    val entities: Iterable<GameEntity<EntityType>>
+        get() = currentEntities.toList()
+
+    fun addEntity(entity: GameEntity<EntityType>) {
+        currentEntities.add(entity)
+    }
+
+    fun removeEntity(entity: GameEntity<EntityType>) {
+        currentEntities.remove(entity)
+    }
+
+    override fun fetchSide(side: BlockSide): Tile {
+        return GameTileRepository.EMPTY
+    }
+
+    companion object {
+
+        fun create(): GameBlock = GameBlock()
+
+        fun createWith(entity: GameEntity<EntityType>) = GameBlock().also {
+            it.addEntity(entity)
+        }
+    }
+}
