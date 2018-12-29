@@ -89,7 +89,7 @@ object Skin : BaseEntityType(
 
 object Club : BaseEntityType(
         name = "Club",
-        description = "A wooden club."), Weapon
+        description = "A wooden club. It doesn't give you an edge over your opponent (haha)."), Weapon
 
 object Jacket : BaseEntityType(
         name = "Leather jacket",

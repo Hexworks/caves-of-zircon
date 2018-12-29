@@ -39,8 +39,8 @@ object EntityFactory {
                         initialArmor = newJacket()),
                 CombatStats.create(
                         maxHp = 100,
-                        attackValue = 20,
-                        defenseValue = 20),
+                        attackValue = 10,
+                        defenseValue = 5),
                 EntityActions(Attack::class, Dig::class),
                 VisionAttributes(
                         visionRadius = 9),
@@ -118,9 +118,9 @@ object EntityFactory {
                 EntityTile(GameTileRepository.ZOMBIE),
                 VisionAttributes(10),
                 CombatStats.create(
-                        maxHp = 20,
-                        attackValue = 5,
-                        defenseValue = 2),
+                        maxHp = 25,
+                        attackValue = 8,
+                        defenseValue = 4),
                 EntityActions(Attack::class),
                 Inventory(1))
         systems(Movable,
@@ -200,7 +200,7 @@ object EntityFactory {
                 .buildGraphicTile()),
                 EntityPosition(),
                 ItemCombatStats(
-                        attackValue = 5,
+                        attackValue = 4,
                         combatItemType = "Weapon"),
                 EntityTile(GameTileRepository.dagger()))
     }
@@ -212,7 +212,7 @@ object EntityFactory {
                 .buildGraphicTile()),
                 EntityPosition(),
                 ItemCombatStats(
-                        attackValue = 10,
+                        attackValue = 6,
                         combatItemType = "Weapon"),
                 EntityTile(GameTileRepository.sword()))
     }
@@ -224,8 +224,8 @@ object EntityFactory {
                 .buildGraphicTile()),
                 EntityPosition(),
                 ItemCombatStats(
-                        attackValue = 5,
-                        defenseValue = 3,
+                        attackValue = 4,
+                        defenseValue = 2,
                         combatItemType = "Weapon"),
                 EntityTile(GameTileRepository.staff()))
     }
@@ -249,7 +249,7 @@ object EntityFactory {
                 .buildGraphicTile()),
                 EntityPosition(),
                 ItemCombatStats(
-                        defenseValue = 4,
+                        defenseValue = 3,
                         combatItemType = "Armor"),
                 EntityTile(GameTileRepository.mediumArmor()))
     }
@@ -261,7 +261,7 @@ object EntityFactory {
                 .buildGraphicTile()),
                 EntityPosition(),
                 ItemCombatStats(
-                        defenseValue = 6,
+                        defenseValue = 4,
                         combatItemType = "Armor"),
                 EntityTile(GameTileRepository.heavyArmor()))
     }
@@ -279,8 +279,7 @@ object EntityFactory {
     }
 
     fun newClub() = newGameEntityOfType(Club) {
-        attributes(ItemCombatStats(attackValue = 1,
-                combatItemType = "Weapon"),
+        attributes(ItemCombatStats(combatItemType = "Weapon"),
                 EntityTile(),
                 EntityPosition(),
                 ItemIcon(Tiles.newBuilder()
