@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.systems
 
-import org.hexworks.amethyst.api.EntityType
-import org.hexworks.amethyst.api.base.BaseSystem
+import org.hexworks.amethyst.api.base.BaseBehavior
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.FungusSpread
 import org.hexworks.cavesofzircon.builders.EntityFactory
 import org.hexworks.cavesofzircon.extensions.GameEntity
@@ -11,7 +11,7 @@ import org.hexworks.cavesofzircon.world.GameContext
 import org.hexworks.cobalt.datatypes.extensions.map
 import org.hexworks.zircon.api.Sizes
 
-object FungusGrower : BaseSystem<GameContext>(FungusSpread::class) {
+object FungusGrower : BaseBehavior<GameContext>(FungusSpread::class) {
 
     override fun update(entity: GameEntity<out EntityType>, context: GameContext): Boolean {
         val world = context.world

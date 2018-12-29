@@ -1,6 +1,6 @@
 package org.hexworks.cavesofzircon.builders
 
-import org.hexworks.amethyst.api.EntityType
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.*
 import org.hexworks.cavesofzircon.attributes.flags.BlockOccupier
 import org.hexworks.cavesofzircon.attributes.flags.VisionBlocker
@@ -46,8 +46,8 @@ object EntityFactory {
                         visionRadius = 9),
                 Inventory(10),
                 ZirconCounter())
-        systems(PlayerInputHandler,
-                CameraMover,
+        behaviors(PlayerInputHandler, DigestiveSystem)
+        facets(CameraMover,
                 Movable,
                 StairClimber,
                 BlockInspector,
@@ -78,9 +78,8 @@ object EntityFactory {
                             addItem(it)
                         }
                     })
-            systems(FungusGrower,
-                    Attackable,
-                    Destroyable)
+            facets(Attackable, Destroyable)
+            behaviors(FungusGrower)
         }
 
     }
@@ -104,10 +103,8 @@ object EntityFactory {
                             addItem(it)
                         }
                     })
-            systems(Movable,
-                    Wanderer,
-                    Attackable,
-                    Destroyable)
+            facets(Movable, Attackable, Destroyable)
+            behaviors(Wanderer)
         }
 
     }
@@ -123,10 +120,8 @@ object EntityFactory {
                         defenseValue = 4),
                 EntityActions(Attack::class),
                 Inventory(1))
-        systems(Movable,
-                HunterSeeker,
-                Attackable,
-                Destroyable)
+        facets(Movable, Attackable, Destroyable)
+        behaviors(HunterSeeker or Wanderer)
     }
 
     fun newWall() = newGameEntityOfType(Wall) {
@@ -134,7 +129,7 @@ object EntityFactory {
                 EntityPosition(),
                 BlockOccupier,
                 EntityTile(GameTileRepository.wall()))
-        systems(Diggable)
+        facets(Diggable)
     }
 
     fun newStairsDown() = newGameEntityOfType(StairsDown) {

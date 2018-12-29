@@ -7,7 +7,7 @@ import org.hexworks.cavesofzircon.world.GameContext
 import org.hexworks.zircon.api.data.impl.Position3D
 
 /**
- * A [Command] representing [source] picking up an item at [position].
+ * A [GameCommand] representing [source] picking up an item at [position].
  */
 data class PickItemUp(override val context: GameContext,
                       override val source: GameEntity<ItemHolder>,

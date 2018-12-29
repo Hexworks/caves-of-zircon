@@ -1,12 +1,12 @@
 package org.hexworks.cavesofzircon.commands
 
-import org.hexworks.amethyst.api.EntityType
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.types.Food
 import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.world.GameContext
 
 /**
- * A [Command] representing [source] eating [target].
+ * An [EntityAction] representing [source] eating [target].
  */
 data class Eat(override val context: GameContext,
                override val source: GameEntity<EntityType>,

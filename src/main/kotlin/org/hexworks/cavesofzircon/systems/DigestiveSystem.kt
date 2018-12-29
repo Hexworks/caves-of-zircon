@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.systems
 
-import org.hexworks.amethyst.api.EntityType
-import org.hexworks.amethyst.api.base.BaseSystem
+import org.hexworks.amethyst.api.base.BaseActor
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.Hunger
 import org.hexworks.cavesofzircon.attributes.types.nutritionalValue
 import org.hexworks.cavesofzircon.commands.Destroy
@@ -10,7 +10,7 @@ import org.hexworks.cavesofzircon.commands.Exert
 import org.hexworks.cavesofzircon.extensions.*
 import org.hexworks.cavesofzircon.world.GameContext
 
-object DigestiveSystem : BaseSystem<GameContext>(Hunger::class) {
+object DigestiveSystem : BaseActor<GameContext>(Hunger::class) {
 
     override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<Eat> { (_, entity, food) ->
         entity.attribute<Hunger>().currentValue += food.nutritionalValue.value

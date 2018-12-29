@@ -7,7 +7,7 @@ import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.world.GameContext
 
 /**
- * A [Command] representing [gainer] gaining xp from [source].
+ * A [GameCommand] representing [gainer] gaining xp from [source].
  */
 data class GainXpFrom(override val context: GameContext,
                       override val source: GameEntity<Combatant>,

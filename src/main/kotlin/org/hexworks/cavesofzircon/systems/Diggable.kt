@@ -1,14 +1,14 @@
 package org.hexworks.cavesofzircon.systems
 
-import org.hexworks.amethyst.api.EntityType
-import org.hexworks.amethyst.api.base.BaseSystem
+import org.hexworks.amethyst.api.base.BaseFacet
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.commands.Dig
 import org.hexworks.cavesofzircon.extensions.GameCommand
 import org.hexworks.cavesofzircon.extensions.whenCommandIs
 import org.hexworks.cavesofzircon.world.GameContext
 import org.hexworks.cobalt.logging.api.LoggerFactory
 
-object Diggable : BaseSystem<GameContext>() {
+object Diggable : BaseFacet<GameContext>() {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 

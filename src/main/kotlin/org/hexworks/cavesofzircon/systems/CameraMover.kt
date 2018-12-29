@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.systems
 
-import org.hexworks.amethyst.api.EntityType
-import org.hexworks.amethyst.api.base.BaseSystem
+import org.hexworks.amethyst.api.base.BaseFacet
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.commands.CameraMoveDirection.*
 import org.hexworks.cavesofzircon.commands.MoveCamera
 import org.hexworks.cavesofzircon.extensions.GameCommand
@@ -9,7 +9,7 @@ import org.hexworks.cavesofzircon.extensions.position
 import org.hexworks.cavesofzircon.extensions.whenCommandIs
 import org.hexworks.cavesofzircon.world.GameContext
 
-object CameraMover : BaseSystem<GameContext>() {
+object CameraMover : BaseFacet<GameContext>() {
 
     override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<MoveCamera> { cmd ->
         val world = cmd.context.world

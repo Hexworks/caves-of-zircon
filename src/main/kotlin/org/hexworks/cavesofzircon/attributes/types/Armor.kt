@@ -1,6 +1,6 @@
 package org.hexworks.cavesofzircon.attributes.types
 
-import org.hexworks.amethyst.api.Entity
+import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.cavesofzircon.attributes.ItemCombatStats
 import org.hexworks.cavesofzircon.extensions.AnyGameEntity
 import org.hexworks.cavesofzircon.extensions.attribute

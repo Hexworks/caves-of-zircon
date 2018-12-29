@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.systems
 
-import org.hexworks.amethyst.api.EntityType
-import org.hexworks.amethyst.api.base.BaseSystem
+import org.hexworks.amethyst.api.base.BaseFacet
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.types.ExperienceGainer
 import org.hexworks.cavesofzircon.attributes.types.combatStats
 import org.hexworks.cavesofzircon.attributes.types.equipment
@@ -15,7 +15,7 @@ import org.hexworks.cavesofzircon.extensions.whenTypeIs
 import org.hexworks.cavesofzircon.world.GameContext
 import org.hexworks.cobalt.datatypes.extensions.fold
 
-object Attackable : BaseSystem<GameContext>() {
+object Attackable : BaseFacet<GameContext>() {
 
     override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<Attack> { (context, attacker, target) ->
         val attackerEquipment = attacker.equipment

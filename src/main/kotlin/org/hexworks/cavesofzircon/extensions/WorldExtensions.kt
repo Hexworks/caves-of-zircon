@@ -1,6 +1,6 @@
 package org.hexworks.cavesofzircon.extensions
 
-import org.hexworks.amethyst.api.EntityType
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.VisionAttributes
 import org.hexworks.cavesofzircon.attributes.types.Item
 import org.hexworks.cavesofzircon.blocks.GameBlock

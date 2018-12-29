@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.systems
 
-import org.hexworks.amethyst.api.EntityType
-import org.hexworks.amethyst.api.base.BaseSystem
+import org.hexworks.amethyst.api.base.BaseBehavior
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.types.ItemHolder
 import org.hexworks.cavesofzircon.commands.*
 import org.hexworks.cavesofzircon.extensions.*
@@ -18,7 +18,7 @@ import org.hexworks.zircon.api.kotlin.whenKeyStroke
  * This [System] is responsible for figuring out what to do based on
  * the input which was received from the player.
  */
-object PlayerInputHandler : BaseSystem<GameContext>() {
+object PlayerInputHandler : BaseBehavior<GameContext>() {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 

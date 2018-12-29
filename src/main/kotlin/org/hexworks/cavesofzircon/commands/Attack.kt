@@ -5,7 +5,7 @@ import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.world.GameContext
 
 /**
- * A [Command] representing [source] attacking [target].
+ * An [EntityAction] representing [source] attacking [target].
  */
 data class Attack(override val context: GameContext,
                   override val source: GameEntity<Combatant>,

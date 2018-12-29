@@ -1,8 +1,8 @@
 package org.hexworks.cavesofzircon.extensions
 
 import org.hexworks.amethyst.api.Attribute
-import org.hexworks.amethyst.api.Entity
-import org.hexworks.amethyst.api.EntityType
+import org.hexworks.amethyst.api.entity.Entity
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.EntityActions
 import org.hexworks.cavesofzircon.attributes.EntityPosition
 import org.hexworks.cavesofzircon.attributes.EntityTile

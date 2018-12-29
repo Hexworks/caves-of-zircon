@@ -1,6 +1,6 @@
 package org.hexworks.cavesofzircon.extensions
 
-import org.hexworks.amethyst.api.EntityType
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.blocks.GameBlock
 
 val GameBlock?.isEmptyFloor: Boolean

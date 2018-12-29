@@ -1,11 +1,11 @@
 package org.hexworks.cavesofzircon.commands
 
-import org.hexworks.amethyst.api.EntityType
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.world.GameContext
 
 /**
- * A [Command] representing [source] digging out [target].
+ * An [EntityAction] representing [source] digging out [target].
  */
 data class Dig(override val context: GameContext,
                override val source: GameEntity<EntityType>,

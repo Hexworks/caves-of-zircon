@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.attributes.types
 
-import org.hexworks.amethyst.api.EntityType
 import org.hexworks.amethyst.api.base.BaseEntityType
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.ZirconCounter
 import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.extensions.attribute

@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.systems
 
-import org.hexworks.amethyst.api.EntityType
-import org.hexworks.amethyst.api.base.BaseSystem
+import org.hexworks.amethyst.api.base.BaseFacet
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.types.combatStats
 import org.hexworks.cavesofzircon.attributes.types.experience
 import org.hexworks.cavesofzircon.commands.GainXpFrom
@@ -15,7 +15,7 @@ import org.hexworks.zircon.internal.Zircon
 import kotlin.math.min
 
 
-object ExperienceSystem : BaseSystem<GameContext>() {
+object ExperienceSystem : BaseFacet<GameContext>() {
 
     override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<GainXpFrom> { (_, source, gainer) ->
         val sourceStats = source.combatStats

@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.world
 
-import org.hexworks.amethyst.api.Entity
-import org.hexworks.amethyst.api.EntityType
+import org.hexworks.amethyst.api.entity.Entity
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.amethyst.api.newEngine
 import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.builders.GameBlockFactory

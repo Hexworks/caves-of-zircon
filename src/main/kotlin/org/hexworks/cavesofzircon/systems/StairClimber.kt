@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.systems
 
-import org.hexworks.amethyst.api.EntityType
-import org.hexworks.amethyst.api.base.BaseSystem
+import org.hexworks.amethyst.api.base.BaseFacet
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.types.zirconCounter
 import org.hexworks.cavesofzircon.commands.MoveDown
 import org.hexworks.cavesofzircon.commands.MoveUp
@@ -12,7 +12,7 @@ import org.hexworks.cavesofzircon.extensions.whenCommandIs
 import org.hexworks.cavesofzircon.world.GameContext
 import org.hexworks.zircon.internal.Zircon
 
-object StairClimber : BaseSystem<GameContext>() {
+object StairClimber : BaseFacet<GameContext>() {
 
     override fun executeCommand(command: GameCommand<out EntityType>): Boolean {
         val world = command.context.world

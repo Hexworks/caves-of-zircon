@@ -1,6 +1,6 @@
 package org.hexworks.cavesofzircon.view.dialog
 
-import org.hexworks.amethyst.api.EntityType
+import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.CombatStats
 import org.hexworks.cavesofzircon.attributes.VisionAttributes
 import org.hexworks.cavesofzircon.extensions.GameEntity
