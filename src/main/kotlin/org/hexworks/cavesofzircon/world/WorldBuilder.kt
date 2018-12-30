@@ -4,7 +4,7 @@ import org.hexworks.cavesofzircon.blocks.GameBlock
 import org.hexworks.cavesofzircon.builders.GameBlockFactory
 import org.hexworks.cavesofzircon.extensions.isEmptyFloor
 import org.hexworks.cavesofzircon.extensions.isWall
-import org.hexworks.cavesofzircon.extensions.sameLevelNeighbors
+import org.hexworks.cavesofzircon.extensions.sameLevelNeighborsShuffled
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.data.impl.Position3D
 import org.hexworks.zircon.api.data.impl.Size3D
@@ -44,7 +44,7 @@ class WorldBuilder(private val worldSize: Size3D) {
                 val (x, y, z) = pos
                 var floors = 0
                 var rocks = 0
-                pos.sameLevelNeighbors().plus(pos).forEach { neighbor ->
+                pos.sameLevelNeighborsShuffled().plus(pos).forEach { neighbor ->
                     blocks.whenPresent(neighbor) { block ->
                         if (block.isEmptyFloor) {
                             floors++
@@ -73,7 +73,7 @@ class WorldBuilder(private val worldSize: Size3D) {
         positionToRegionLookup[pos] = region
         while (regionTileQueue.isNotEmpty()) {
             val position = regionTileQueue.removeAt(0)
-            position.sameLevelNeighbors().forEach { neighbor ->
+            position.sameLevelNeighborsShuffled().forEach { neighbor ->
                 neighbor.whenRegionlessFloor {
                     size++
                     positionToRegionLookup[neighbor] = region

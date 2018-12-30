@@ -9,7 +9,4 @@ import org.hexworks.cavesofzircon.world.GameContext
  */
 data class Attack(override val context: GameContext,
                   override val source: GameEntity<Combatant>,
-                  override val target: GameEntity<Combatant>) : EntityAction<Combatant, Combatant> {
-
-    override fun toString() = "attacking $target."
-}
+                  override val target: GameEntity<Combatant>) : EntityAction<Combatant, Combatant>

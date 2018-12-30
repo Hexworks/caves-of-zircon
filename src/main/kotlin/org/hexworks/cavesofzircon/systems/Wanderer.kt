@@ -5,7 +5,7 @@ import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.commands.MoveTo
 import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.extensions.position
-import org.hexworks.cavesofzircon.extensions.sameLevelNeighbors
+import org.hexworks.cavesofzircon.extensions.sameLevelNeighborsShuffled
 import org.hexworks.cavesofzircon.world.GameContext
 
 object Wanderer : BaseBehavior<GameContext>() {
@@ -16,7 +16,7 @@ object Wanderer : BaseBehavior<GameContext>() {
             entity.executeCommand(MoveTo(
                     context = context,
                     source = entity,
-                    position = pos.sameLevelNeighbors().first()))
+                    position = pos.sameLevelNeighborsShuffled().first()))
         }
         return true
     }

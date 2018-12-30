@@ -11,7 +11,4 @@ import org.hexworks.zircon.api.data.impl.Position3D
  */
 data class LookAt(override val context: GameContext,
                   override val source: GameEntity<EntityType>,
-                  val position: Position3D) : GameCommand<EntityType> {
-
-    override fun toString() = "looking at $position."
-}
+                  val position: Position3D) : GameCommand<EntityType>

@@ -10,7 +10,4 @@ import org.hexworks.cavesofzircon.world.GameContext
  */
 data class Exert(override val context: GameContext,
                  override val source: GameEntity<EntityType>,
-                 val force: Int) : GameCommand<EntityType> {
-
-    override fun toString() = "exerting force $force."
-}
+                 val force: Int) : GameCommand<EntityType>

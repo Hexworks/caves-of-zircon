@@ -14,7 +14,4 @@ data class MoveCamera(override val context: GameContext,
                       override val source: GameEntity<EntityType>,
                       val oldPosition: Position3D,
                       val newPosition: Position3D,
-                      val cameraMoveDirection: CameraMoveDirection) : GameCommand<EntityType> {
-
-    override fun toString() = "moving $source's camera from $oldPosition to $newPosition."
-}
+                      val cameraMoveDirection: CameraMoveDirection) : GameCommand<EntityType>

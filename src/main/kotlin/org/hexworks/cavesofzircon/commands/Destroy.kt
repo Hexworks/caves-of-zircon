@@ -9,7 +9,4 @@ import org.hexworks.cavesofzircon.world.GameContext
  * A [GameCommand] representing the destruction of [source].
  */
 data class Destroy(override val context: GameContext,
-                   override val source: GameEntity<EntityType>) : GameCommand<EntityType> {
-
-    override fun toString() = "trying to destroy $source."
-}
+                   override val source: GameEntity<EntityType>) : GameCommand<EntityType>

@@ -8,9 +8,6 @@ import org.hexworks.cavesofzircon.extensions.hasAttribute
 
 interface Weapon : Item
 
-val AnyGameEntity.isWeapon: Boolean
-    get() = hasAttribute<Weapon>()
-
 val GameEntity<Weapon>.attackValue: Int
     get() = attribute<ItemCombatStats>().attackValue
 

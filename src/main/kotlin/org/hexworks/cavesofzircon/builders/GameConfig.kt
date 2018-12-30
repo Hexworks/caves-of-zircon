@@ -14,8 +14,8 @@ object GameConfig {
     // look & feel
     val TILESET = CP437TilesetResources.rogueYun16x16()
     val THEME = ColorThemes.zenburnVanilla()
-    val SIDEBAR_WIDTH = 18
-    val LOG_AREA_HEIGHT = 8
+    const val SIDEBAR_WIDTH = 18
+    const val LOG_AREA_HEIGHT = 8
 
     private const val SCREEN_SIZE_PERCENT = 0.8
     private val SCREEN_SIZE = Toolkit.getDefaultToolkit().screenSize
@@ -27,6 +27,7 @@ object GameConfig {
     val VISIBLE_WORLD_HEIGHT = WINDOW_HEIGHT - LOG_AREA_HEIGHT
     val WORLD_SIZE = Sizes.create3DSize(WINDOW_WIDTH, WINDOW_HEIGHT, DUNGEON_LEVELS)
 
+    // entities
     const val FUNGI_PER_LEVEL = 3
     const val BATS_PER_LEVEL = 10
     const val ZOMBIES_PER_LEVEL = 2

@@ -1,3 +1,5 @@
+@file:Suppress("MemberVisibilityCanBePrivate")
+
 package org.hexworks.cavesofzircon.builders
 
 import org.hexworks.amethyst.api.entity.EntityType

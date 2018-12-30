@@ -12,7 +12,7 @@ object ItemPicker : BaseFacet<GameContext>() {
 
     override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<PickItemUp> { (context, itemHolder, position) ->
         val world = context.world
-        world.findItemsAt(position).withPresentItems { items ->
+        world.findItemsAt(position).whenHasItems { items ->
             val item = items.last()
             if (itemHolder.inventory.addItem(item)) {
                 world.removeEntity(item)

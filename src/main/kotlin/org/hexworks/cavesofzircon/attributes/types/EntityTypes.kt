@@ -79,14 +79,6 @@ object HeavyArmor : BaseEntityType(
 
 // built-in items
 
-object Fangs : BaseEntityType(
-        name = "fangs",
-        description = "Bloody fangs"), Weapon
-
-object Skin : BaseEntityType(
-        name = "skin",
-        description = "Skin."), Armor
-
 object Club : BaseEntityType(
         name = "Club",
         description = "A wooden club. It doesn't give you an edge over your opponent (haha)."), Weapon

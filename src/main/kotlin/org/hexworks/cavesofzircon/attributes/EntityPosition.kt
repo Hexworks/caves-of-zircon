@@ -5,13 +5,9 @@ import org.hexworks.cobalt.databinding.api.createPropertyFrom
 import org.hexworks.zircon.api.data.impl.Position3D
 
 /**
- * Contains data about how hungry an entity is.
+ * Contains the [Position3D] of an entity.
  */
 class EntityPosition(initialPosition: Position3D = Position3D.unknown()) : Attribute {
     private val positionProperty = createPropertyFrom(initialPosition)
-    var position: Position3D
-        get() = positionProperty.value
-        set(value) {
-            positionProperty.value = value
-        }
+    var position: Position3D by positionProperty.asDelegate()
 }

@@ -11,7 +11,4 @@ import org.hexworks.cavesofzircon.world.GameContext
  */
 data class GainXpFrom(override val context: GameContext,
                       override val source: GameEntity<Combatant>,
-                      val gainer: GameEntity<ExperienceGainer>) : GameCommand<Combatant> {
-
-    override fun toString() = "$gainer gains xp from $source."
-}
+                      val gainer: GameEntity<ExperienceGainer>) : GameCommand<Combatant>

@@ -10,7 +10,4 @@ import org.hexworks.cavesofzircon.world.GameContext
  */
 data class Eat(override val context: GameContext,
                override val source: GameEntity<EntityType>,
-               override val target: GameEntity<Food>) : EntityAction<EntityType, Food> {
-
-    override fun toString() = "$source eats $target."
-}
+               override val target: GameEntity<Food>) : EntityAction<EntityType, Food>

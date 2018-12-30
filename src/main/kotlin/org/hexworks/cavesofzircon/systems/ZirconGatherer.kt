@@ -17,7 +17,7 @@ object ZirconGatherer : BaseFacet<GameContext>(ZirconCounter::class) {
         var success = false
         command.whenCommandIs<PickItemUp> { (context, source, position) ->
             val world = context.world
-            world.findItemsAt(position).withPresentItems { items ->
+            world.findItemsAt(position).whenHasItems { items ->
                 val item = items.last()
                 source.whenTypeIs<Player> { player ->
                     if (item.type == Zircon) {

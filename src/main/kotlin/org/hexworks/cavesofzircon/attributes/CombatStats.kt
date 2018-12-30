@@ -15,18 +15,10 @@ data class CombatStats(val maxHpProperty: Property<Int>,
                        val attackValueProperty: Property<Int>,
                        val defenseValueProperty: Property<Int>) : DisplayableAttribute {
 
-    val maxHp: Int
-        get() = maxHpProperty.value
-
-    val hp: Int
-        get() = hpProperty.value
-
-    val attackValue: Int
-        get() = attackValueProperty.value
-
-    val defenseValue: Int
-        get() = defenseValueProperty.value
-
+    val maxHp: Int by maxHpProperty.asDelegate()
+    val hp: Int by hpProperty.asDelegate()
+    val attackValue: Int by attackValueProperty.asDelegate()
+    val defenseValue: Int by defenseValueProperty.asDelegate()
 
     /**
      * Executes [fn] when the entity having this attribute

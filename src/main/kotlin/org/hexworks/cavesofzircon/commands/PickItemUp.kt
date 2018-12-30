@@ -11,7 +11,4 @@ import org.hexworks.zircon.api.data.impl.Position3D
  */
 data class PickItemUp(override val context: GameContext,
                       override val source: GameEntity<ItemHolder>,
-                      val position: Position3D) : GameCommand<ItemHolder> {
-
-    override fun toString() = "looking for items at $position."
-}
+                      val position: Position3D) : GameCommand<ItemHolder>

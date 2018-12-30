@@ -8,6 +8,6 @@ fun <T : Any> List<T>.whenNotEmpty(fn: (List<T>) -> Unit) {
     }
 }
 
-fun List<GameEntity<Item>>.withPresentItems(fn: (List<GameEntity<Item>>) -> Unit) {
+fun List<GameEntity<Item>>.whenHasItems(fn: (List<GameEntity<Item>>) -> Unit) {
     whenNotEmpty(fn)
 }

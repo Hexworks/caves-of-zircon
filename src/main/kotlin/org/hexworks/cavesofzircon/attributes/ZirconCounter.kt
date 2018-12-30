@@ -11,11 +11,7 @@ import org.hexworks.zircon.api.component.Component
  */
 data class ZirconCounter(private val zirconCountProperty: Property<Int> = createPropertyFrom(0)) : DisplayableAttribute {
 
-    var zirconCount: Int
-        get() = zirconCountProperty.value
-        set(value) {
-            zirconCountProperty.value = value
-        }
+    var zirconCount: Int by zirconCountProperty.asDelegate()
 
     override fun toComponent(width: Int): Component {
         val zirconProp = createPropertyFrom("Zircons: ")

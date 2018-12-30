@@ -14,7 +14,4 @@ import org.hexworks.zircon.api.data.impl.Position3D
 data class DropItem(override val context: GameContext,
                     override val source: GameEntity<ItemHolder>,
                     val item: GameEntity<Item>,
-                    val position: Position3D) : GameCommand<EntityType> {
-
-    override fun toString() = "dropping item '$source'."
-}
+                    val position: Position3D) : GameCommand<EntityType>

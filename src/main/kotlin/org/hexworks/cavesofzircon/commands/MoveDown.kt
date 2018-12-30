@@ -12,7 +12,4 @@ import org.hexworks.zircon.api.data.impl.Position3D
  */
 data class MoveDown(override val context: GameContext,
                     override val source: GameEntity<Player>,
-                    val position: Position3D) : GameCommand<EntityType> {
-
-    override fun toString() = "trying to move down."
-}
+                    val position: Position3D) : GameCommand<EntityType>
