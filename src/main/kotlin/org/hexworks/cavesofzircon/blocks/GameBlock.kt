@@ -14,7 +14,13 @@ class GameBlock private constructor(private var defaultTile: Tile = GameTileRepo
     override val layers
         get() = mutableListOf(defaultTile, currentEntities.map {
             it.tile
-        }.lastOrNull() ?: GameTileRepository.EMPTY)
+        }.let {
+            if (it.contains(GameTileRepository.PLAYER)) {
+                GameTileRepository.PLAYER
+            } else {
+                it.firstOrNull()
+            }
+        } ?: GameTileRepository.EMPTY)
 
     val isOccupied: Boolean
         get() = currentEntities.any { it.occupiesBlock }

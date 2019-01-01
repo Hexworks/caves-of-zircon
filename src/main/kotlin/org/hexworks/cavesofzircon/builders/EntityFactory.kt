@@ -16,6 +16,7 @@ import org.hexworks.cavesofzircon.extensions.newGameEntityOfType
 import org.hexworks.cavesofzircon.systems.*
 import org.hexworks.cavesofzircon.world.Game
 import org.hexworks.zircon.api.Tiles
+import org.hexworks.zircon.api.data.impl.Position3D
 import org.hexworks.zircon.api.resource.BuiltInGraphicTilesetResource
 import kotlin.random.Random
 
@@ -34,8 +35,8 @@ object EntityFactory {
                 EntityTile(GameTileRepository.PLAYER),
                 Experience(currentLevel = 1,
                         currentXP = 0),
-                Hunger(initialValue = 1000,
-                        maxValue = 1000),
+                Hunger(initialValue = 5000,
+                        maxValue = 5000),
                 Equipment(
                         initialWeapon = newClub(),
                         initialArmor = newJacket()),
@@ -126,9 +127,13 @@ object EntityFactory {
         behaviors(HunterSeeker or Wanderer)
     }
 
-    fun newWall() = newGameEntityOfType(Wall) {
+    fun newWall(position: Position3D) = newGameEntityOfType(Wall) {
         attributes(VisionBlocker,
-                EntityPosition(),
+                EntityPosition(position.also {
+                    if(it.isUnknown()) {
+                        println()
+                    }
+                }),
                 BlockOccupier,
                 EntityTile(GameTileRepository.wall()))
         facets(Diggable)
@@ -175,7 +180,7 @@ object EntityFactory {
                 .withName("Violet fungus")
                 .withTileset(BuiltInGraphicTilesetResource.NETHACK_16X16)
                 .buildGraphicTile()),
-                NutritionalValue(100),
+                NutritionalValue(500),
                 EntityPosition(),
                 EntityTile(GameTileRepository.MUSHROOM))
     }
@@ -185,7 +190,7 @@ object EntityFactory {
                 .withName("Meatball")
                 .withTileset(BuiltInGraphicTilesetResource.NETHACK_16X16)
                 .buildGraphicTile()),
-                NutritionalValue(150),
+                NutritionalValue(750),
                 EntityPosition(),
                 EntityTile(GameTileRepository.BAT_MEAT))
     }

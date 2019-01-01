@@ -94,3 +94,8 @@ inline fun <reified T : EntityType> AnyGameEntity.whenTypeIs(fn: (Entity<T, Game
     }
 }
 
+@Suppress("UNCHECKED_CAST")
+inline fun <reified T : EntityType> AnyGameEntity.typeIs(): Boolean {
+    return this.type::class.isSubclassOf(T::class)
+}
+

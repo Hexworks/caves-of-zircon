@@ -32,7 +32,7 @@ class WorldBuilder(private val worldSize: Size3D) {
         forAllPositions { pos ->
             blocks[pos] = if (Math.random() < 0.5) {
                 GameBlockFactory.floor()
-            } else GameBlockFactory.wall()
+            } else GameBlockFactory.wall(pos)
         }
         return this
     }
@@ -51,7 +51,7 @@ class WorldBuilder(private val worldSize: Size3D) {
                         } else rocks++
                     }
                 }
-                newBlocks[Positions.create3DPosition(x, y, z)] = if (floors >= rocks) GameBlockFactory.floor() else GameBlockFactory.wall()
+                newBlocks[Positions.create3DPosition(x, y, z)] = if (floors >= rocks) GameBlockFactory.floor() else GameBlockFactory.wall(pos)
             }
             blocks = newBlocks
         }

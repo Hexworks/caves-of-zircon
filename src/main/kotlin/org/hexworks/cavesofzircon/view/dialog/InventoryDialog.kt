@@ -61,6 +61,7 @@ class InventoryDialog(context: GameContext) : Dialog(context.screen) {
                                 itemListFragment.fetchSelectedItem().map { selectedItem ->
                                     selectedItem.whenTypeIs<Food> { food ->
                                         itemListFragment.removeSelectedItem()
+                                        inventory.removeItem(food)
                                         player.executeCommand(Eat(
                                                 context = context,
                                                 source = player,

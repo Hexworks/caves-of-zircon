@@ -11,7 +11,7 @@ import org.hexworks.zircon.internal.Zircon
 
 object Destroyable : BaseFacet<GameContext>() {
 
-    override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<Destroy> { (context, entity) ->
+    override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<Destroy> { (context, entity, cause) ->
         val world = context.world
         entity.whenHasInventory { inventory ->
             world.addEntity(
@@ -20,7 +20,7 @@ object Destroyable : BaseFacet<GameContext>() {
         }
         world.removeEntity(entity)
         if (entity.isPlayer) {
-            Zircon.eventBus.publish(PlayerDied)
+            Zircon.eventBus.publish(PlayerDied("You died because of $cause"))
         }
     }
 }

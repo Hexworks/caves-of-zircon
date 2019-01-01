@@ -10,13 +10,14 @@ import org.hexworks.zircon.api.graphics.BoxType
 import org.hexworks.zircon.api.grid.TileGrid
 import org.hexworks.zircon.api.kotlin.onMouseReleased
 
-class LoseView(tileGrid: TileGrid) : BaseView(tileGrid) {
+class LoseView(tileGrid: TileGrid, causeOfDeath: String) : BaseView(tileGrid) {
 
     init {
-        val msg = "You lost!"
+        val msg = "Game Over"
         val header = Components.textBox()
-                .withContentWidth(msg.length)
+                .withContentWidth(30)
                 .addHeader(msg)
+                .addParagraph(causeOfDeath)
                 .addNewLine()
                 .withAlignmentWithin(tileGrid, ComponentAlignment.CENTER)
                 .build()

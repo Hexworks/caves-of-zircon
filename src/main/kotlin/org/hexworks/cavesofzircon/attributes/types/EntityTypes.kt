@@ -21,7 +21,8 @@ object StairsUp : BaseEntityType(
 object Exit : BaseEntityType(
         name = "exit")
 
-object Wall : BaseEntityType()
+object Wall : BaseEntityType(
+        name = "wall")
 
 object Bat : BaseEntityType(
         name = "bat")

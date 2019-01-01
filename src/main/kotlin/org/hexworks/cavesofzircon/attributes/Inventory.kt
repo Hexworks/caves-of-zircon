@@ -16,7 +16,10 @@ class Inventory(val size: Int) : Attribute {
     val items: List<GameEntity<Item>>
         get() = currentItems.toList()
 
-    private val isFull = currentItems.size >= size
+    val isEmpty: Boolean
+        get() = currentItems.isEmpty()
+    val isFull: Boolean
+        get() = currentItems.size >= size
 
     fun findItemBy(id: Identifier): Maybe<GameEntity<Item>> {
         return Maybe.ofNullable(items.firstOrNull { it.id == id })

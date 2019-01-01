@@ -29,10 +29,11 @@ object DigestiveSystem : BaseActor<GameContext>(Hunger::class) {
 
     private fun checkStarvation(context: GameContext, entity: GameEntity<EntityType>, hunger: Hunger) {
         if (hunger.currentValue <= 0) {
-            logGameEvent("$entity dies of hunger.")
+            logGameEvent("$entity died of starvation.")
             entity.executeCommand(Destroy(
                     context = context,
-                    source = entity))
+                    source = entity,
+                    cause = "starvation"))
         }
     }
 }

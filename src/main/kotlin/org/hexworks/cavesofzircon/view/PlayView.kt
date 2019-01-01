@@ -63,7 +63,7 @@ class PlayView(tileGrid: TileGrid, private val game: Game) : BaseView(tileGrid) 
                 .withAlignmentWithin(screen, TOP_RIGHT)
                 .build()
         Zircon.eventBus.subscribe<PlayerDied> {
-            LoseView(tileGrid).dock()
+            LoseView(tileGrid, it.cause).dock()
         }
         Zircon.eventBus.subscribe<PlayerWonTheGame> {
             WinView(tileGrid, it.zircons).dock()

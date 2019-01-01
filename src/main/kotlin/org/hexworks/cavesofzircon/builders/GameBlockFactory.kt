@@ -1,12 +1,13 @@
 package org.hexworks.cavesofzircon.builders
 
 import org.hexworks.cavesofzircon.blocks.GameBlock
+import org.hexworks.zircon.api.data.impl.Position3D
 
 object GameBlockFactory {
 
     fun floor() = GameBlock.create()
 
-    fun wall() = GameBlock.createWith(EntityFactory.newWall())
+    fun wall(position: Position3D) = GameBlock.createWith(EntityFactory.newWall(position))
 
     fun stairsDown() = GameBlock.createWith(EntityFactory.newStairsDown())
 
