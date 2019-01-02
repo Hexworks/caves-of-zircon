@@ -5,12 +5,14 @@ import org.hexworks.cavesofzircon.world.GameBuilder
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.component.ComponentAlignment
 import org.hexworks.zircon.api.graphics.BoxType
-import org.hexworks.zircon.api.grid.TileGrid
 import org.hexworks.zircon.api.kotlin.onMouseReleased
+import org.hexworks.zircon.api.mvc.base.BaseView
 
-class WinView(tileGrid: TileGrid, zircons: Int) : BaseView(tileGrid) {
+class WinView(private val zircons: Int) : BaseView() {
 
-    init {
+    override val theme = GameConfig.THEME
+
+    override fun onDock() {
         val msg = "You won!"
         val header = Components.textBox()
                 .withContentWidth(GameConfig.VISIBLE_WORLD_WIDTH / 2)
@@ -18,7 +20,7 @@ class WinView(tileGrid: TileGrid, zircons: Int) : BaseView(tileGrid) {
                 .addNewLine()
                 .addParagraph("Congratulations! You have escaped from Caves of Zircon!", withNewLine = false)
                 .addParagraph("You've managed to find $zircons Zircons.")
-                .withAlignmentWithin(tileGrid, ComponentAlignment.CENTER)
+                .withAlignmentWithin(screen, ComponentAlignment.CENTER)
                 .build()
         val restartButton = Components.button()
                 .withAlignmentAround(header, ComponentAlignment.BOTTOM_LEFT)
@@ -36,8 +38,9 @@ class WinView(tileGrid: TileGrid, zircons: Int) : BaseView(tileGrid) {
                 .build()
 
         restartButton.onMouseReleased {
-            PlayView(tileGrid, GameBuilder(
-                    worldSize = GameConfig.WORLD_SIZE).buildGame()).dock()
+            replaceWith(PlayView(GameBuilder(
+                    worldSize = GameConfig.WORLD_SIZE).buildGame()))
+            close()
         }
 
         exitButton.onMouseReleased {

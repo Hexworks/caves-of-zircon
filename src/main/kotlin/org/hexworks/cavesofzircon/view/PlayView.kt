@@ -18,13 +18,15 @@ import org.hexworks.zircon.api.component.ComponentAlignment.BOTTOM_RIGHT
 import org.hexworks.zircon.api.component.ComponentAlignment.TOP_RIGHT
 import org.hexworks.zircon.api.data.Tile
 import org.hexworks.zircon.api.game.ProjectionMode.TOP_DOWN
-import org.hexworks.zircon.api.grid.TileGrid
 import org.hexworks.zircon.api.kotlin.onKeyStroke
+import org.hexworks.zircon.api.mvc.base.BaseView
 import org.hexworks.zircon.internal.Zircon
 
-class PlayView(tileGrid: TileGrid, private val game: Game) : BaseView(tileGrid) {
+class PlayView(private val game: Game) : BaseView() {
 
-    init {
+    override val theme = GameConfig.THEME
+
+    override fun onDock() {
         val player = game.player
         Zircon.eventBus.subscribe<PlayerGainedLevel> { (player) ->
             openLevelUpDialog(screen, player)
@@ -63,10 +65,12 @@ class PlayView(tileGrid: TileGrid, private val game: Game) : BaseView(tileGrid) 
                 .withAlignmentWithin(screen, TOP_RIGHT)
                 .build()
         Zircon.eventBus.subscribe<PlayerDied> {
-            LoseView(tileGrid, it.cause).dock()
+            replaceWith(LoseView(it.cause))
+            close()
         }
         Zircon.eventBus.subscribe<PlayerWonTheGame> {
-            WinView(tileGrid, it.zircons).dock()
+            replaceWith(WinView(it.zircons))
+            close()
         }
         screen.addComponent(sidebar)
         screen.addComponent(logPanel)
