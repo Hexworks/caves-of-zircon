@@ -18,6 +18,6 @@ object Wanderer : BaseBehavior<GameContext>() {
                     source = entity,
                     position = pos.sameLevelNeighborsShuffled().first()))
         }
-        return true
+        return false
     }
 }

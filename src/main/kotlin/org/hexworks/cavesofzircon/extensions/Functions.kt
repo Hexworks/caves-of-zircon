@@ -1,8 +1,8 @@
 package org.hexworks.cavesofzircon.extensions
 
+import org.hexworks.amethyst.api.Entities.newEntityOfType
 import org.hexworks.amethyst.api.builder.EntityBuilder
 import org.hexworks.amethyst.api.entity.EntityType
-import org.hexworks.amethyst.api.newEntityOfType
 import org.hexworks.cavesofzircon.events.GameLogEvent
 import org.hexworks.cavesofzircon.world.GameContext
 import org.hexworks.zircon.internal.Zircon

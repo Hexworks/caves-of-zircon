@@ -1,5 +1,8 @@
 package org.hexworks.cavesofzircon.systems
 
+import org.hexworks.amethyst.api.Consumed
+import org.hexworks.amethyst.api.Pass
+import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.commands.LookAt
@@ -14,7 +17,9 @@ object Movable : BaseFacet<GameContext>() {
 
     override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<MoveTo> { (context, entity, position) ->
         val world = context.world
+        var result: Response = Pass
         world.whenHasBlockAt(position) { block ->
+            result = Consumed
             if (block.isOccupied) {
                 entity.tryActionsOn(context, block.occupier)
             } else {
@@ -22,6 +27,7 @@ object Movable : BaseFacet<GameContext>() {
                 entity.executeCommand(LookAt(context, entity, position))
             }
         }
+        result
     }
 }
 

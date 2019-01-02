@@ -1,5 +1,8 @@
 package org.hexworks.cavesofzircon.systems
 
+import org.hexworks.amethyst.api.Consumed
+import org.hexworks.amethyst.api.Pass
+import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.types.combatStats
@@ -22,7 +25,9 @@ object ExperienceSystem : BaseFacet<GameContext>() {
         val gainerXp = gainer.experience
         val gainerStats = gainer.combatStats
         val amount = (sourceStats.maxHp + sourceStats.attackValue + sourceStats.defenseValue) - gainerXp.currentLevel * 2
+        var response: Response = Pass
         if (amount > 0) {
+            response = Consumed
             gainerXp.currentXP += amount
             while (gainerXp.currentXP > Math.pow(gainerXp.currentLevel.toDouble(), 1.5) * 20) {
                 gainerXp.currentLevel++
@@ -34,5 +39,6 @@ object ExperienceSystem : BaseFacet<GameContext>() {
                 }
             }
         }
+        response
     }
 }

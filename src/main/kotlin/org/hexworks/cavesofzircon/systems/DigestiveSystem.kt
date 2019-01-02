@@ -1,5 +1,8 @@
 package org.hexworks.cavesofzircon.systems
 
+import org.hexworks.amethyst.api.Consumed
+import org.hexworks.amethyst.api.Pass
+import org.hexworks.amethyst.api.Response
 import org.hexworks.amethyst.api.base.BaseActor
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.Hunger
@@ -12,12 +15,18 @@ import org.hexworks.cavesofzircon.world.GameContext
 
 object DigestiveSystem : BaseActor<GameContext>(Hunger::class) {
 
-    override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<Eat> { (_, entity, food) ->
-        entity.attribute<Hunger>().currentValue += food.nutritionalValue.value
-    } or command.whenCommandIs<Exert> { (context, entity, force) ->
-        val hunger = entity.attribute<Hunger>()
-        hunger.currentValue -= force
-        checkStarvation(context, entity, hunger)
+    override fun executeCommand(command: GameCommand<out EntityType>): Response {
+        var response: Response = command.whenCommandIs<Eat> { (_, entity, food) ->
+            entity.attribute<Hunger>().currentValue += food.nutritionalValue.value
+            Consumed
+        }
+        response = command.whenCommandIs<Exert> { (context, entity, force) ->
+            val hunger = entity.attribute<Hunger>()
+            hunger.currentValue -= force
+            checkStarvation(context, entity, hunger)
+            Consumed
+        }
+        return response
     }
 
     override fun update(entity: GameEntity<out EntityType>, context: GameContext): Boolean {

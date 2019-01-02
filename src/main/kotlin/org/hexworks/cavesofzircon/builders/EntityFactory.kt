@@ -53,12 +53,15 @@ object EntityFactory {
         facets(CameraMover,
                 Movable,
                 StairClimber,
+                StairDescender,
                 BlockInspector,
                 Destroyable,
                 ExperienceSystem,
                 DigestiveSystem,
                 Attackable,
-                ZirconGatherer or ItemPicker)
+                ZirconGatherer,
+                ItemPicker,
+                ItemDropper)
     }
 
 
@@ -130,7 +133,7 @@ object EntityFactory {
     fun newWall(position: Position3D) = newGameEntityOfType(Wall) {
         attributes(VisionBlocker,
                 EntityPosition(position.also {
-                    if(it.isUnknown()) {
+                    if (it.isUnknown()) {
                         println()
                     }
                 }),

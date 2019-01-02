@@ -1,5 +1,6 @@
 package org.hexworks.cavesofzircon.systems
 
+import org.hexworks.amethyst.api.Consumed
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.commands.CameraMoveDirection.*
@@ -39,5 +40,6 @@ object CameraMover : BaseFacet<GameContext>() {
                 }
             }
         }
+        Consumed
     }
 }

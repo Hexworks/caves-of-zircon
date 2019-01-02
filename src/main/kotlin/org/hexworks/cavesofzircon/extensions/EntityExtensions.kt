@@ -1,6 +1,7 @@
 package org.hexworks.cavesofzircon.extensions
 
 import org.hexworks.amethyst.api.Attribute
+import org.hexworks.amethyst.api.Consumed
 import org.hexworks.amethyst.api.entity.Entity
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.EntityActions
@@ -75,7 +76,7 @@ fun AnyGameEntity.tryActionsOn(context: GameContext, target: AnyGameEntity) {
     attribute<EntityActions>()
             .createActionsFor(context, this, target)
             .forEach { action ->
-                if (target.executeCommand(action)) {
+                if (target.executeCommand(action) is Consumed) {
                     return@forEach
                 }
             }

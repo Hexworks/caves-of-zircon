@@ -1,5 +1,7 @@
 package org.hexworks.cavesofzircon.systems
 
+import org.hexworks.amethyst.api.Consumed
+import org.hexworks.amethyst.api.Pass
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.types.ExperienceGainer
@@ -49,6 +51,7 @@ object Attackable : BaseFacet<GameContext>() {
                             gainer = gainer))
                 }
             }
-        }
+            Consumed
+        } else Pass
     }
 }

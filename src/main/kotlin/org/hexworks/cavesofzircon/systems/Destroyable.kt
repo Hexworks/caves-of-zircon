@@ -1,5 +1,6 @@
 package org.hexworks.cavesofzircon.systems
 
+import org.hexworks.amethyst.api.Consumed
 import org.hexworks.amethyst.api.base.BaseFacet
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.builders.EntityFactory
@@ -22,5 +23,6 @@ object Destroyable : BaseFacet<GameContext>() {
         if (entity.isPlayer) {
             Zircon.eventBus.publish(PlayerDied("You died because of $cause"))
         }
+        Consumed
     }
 }
