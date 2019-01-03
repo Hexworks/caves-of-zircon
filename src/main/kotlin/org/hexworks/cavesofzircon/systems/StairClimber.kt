@@ -9,7 +9,7 @@ import org.hexworks.cavesofzircon.commands.MoveUp
 import org.hexworks.cavesofzircon.events.PlayerWonTheGame
 import org.hexworks.cavesofzircon.extensions.GameCommand
 import org.hexworks.cavesofzircon.extensions.logGameEvent
-import org.hexworks.cavesofzircon.extensions.whenCommandIs
+import org.hexworks.cavesofzircon.extensions.responseWhenCommandIs
 import org.hexworks.cavesofzircon.world.GameContext
 import org.hexworks.zircon.internal.Zircon
 
@@ -17,7 +17,7 @@ object StairClimber : BaseFacet<GameContext>() {
 
     override fun executeCommand(command: GameCommand<out EntityType>): Response {
         val world = command.context.world
-        return command.whenCommandIs<MoveUp> { (_, player, position) ->
+        return command.responseWhenCommandIs<MoveUp> { (_, player, position) ->
             world.withBlockAt(position) { block ->
                 when {
                     block.hasStairsUp -> {

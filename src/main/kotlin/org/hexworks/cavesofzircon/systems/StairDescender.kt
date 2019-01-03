@@ -9,7 +9,7 @@ import org.hexworks.cavesofzircon.commands.MoveDown
 import org.hexworks.cavesofzircon.events.PlayerWonTheGame
 import org.hexworks.cavesofzircon.extensions.GameCommand
 import org.hexworks.cavesofzircon.extensions.logGameEvent
-import org.hexworks.cavesofzircon.extensions.whenCommandIs
+import org.hexworks.cavesofzircon.extensions.responseWhenCommandIs
 import org.hexworks.cavesofzircon.world.GameContext
 import org.hexworks.zircon.internal.Zircon
 
@@ -17,7 +17,7 @@ object StairDescender : BaseFacet<GameContext>() {
 
     override fun executeCommand(command: GameCommand<out EntityType>): Response {
         val world = command.context.world
-        return command.whenCommandIs<MoveDown> { (_, player, position) ->
+        return command.responseWhenCommandIs<MoveDown> { (_, player, position) ->
             world.withBlockAt(position) { block ->
                 when {
                     block.hasStairsDown -> {

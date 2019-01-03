@@ -9,7 +9,7 @@ import org.hexworks.cavesofzircon.world.GameContext
 
 object BlockInspector : BaseFacet<GameContext>() {
 
-    override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<LookAt> { (context, source, position) ->
+    override fun executeCommand(command: GameCommand<out EntityType>) = command.responseWhenCommandIs<LookAt> { (context, source, position) ->
         if (source.isPlayer) {
             context.world.withBlockAt(position) { block ->
                 block.withTopNonPlayerEntity { entity ->

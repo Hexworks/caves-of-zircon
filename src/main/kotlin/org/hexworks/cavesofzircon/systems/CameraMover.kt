@@ -7,12 +7,12 @@ import org.hexworks.cavesofzircon.commands.CameraMoveDirection.*
 import org.hexworks.cavesofzircon.commands.MoveCamera
 import org.hexworks.cavesofzircon.extensions.GameCommand
 import org.hexworks.cavesofzircon.extensions.position
-import org.hexworks.cavesofzircon.extensions.whenCommandIs
+import org.hexworks.cavesofzircon.extensions.responseWhenCommandIs
 import org.hexworks.cavesofzircon.world.GameContext
 
 object CameraMover : BaseFacet<GameContext>() {
 
-    override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<MoveCamera> { cmd ->
+    override fun executeCommand(command: GameCommand<out EntityType>) = command.responseWhenCommandIs<MoveCamera> { cmd ->
         val world = cmd.context.world
         val player = cmd.context.player
         val screenPos = player.position - world.visibleOffset()

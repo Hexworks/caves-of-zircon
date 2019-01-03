@@ -1,6 +1,5 @@
 package org.hexworks.cavesofzircon.builders
 
-import org.hexworks.cavesofzircon.extensions.lightenByPercent
 import org.hexworks.zircon.api.Tiles
 import org.hexworks.zircon.api.color.ANSITileColor
 import org.hexworks.zircon.api.data.CharacterTile

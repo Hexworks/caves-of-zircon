@@ -16,7 +16,7 @@ import org.hexworks.cavesofzircon.world.GameContext
 
 object ZirconGatherer : BaseFacet<GameContext>(ZirconCounter::class) {
 
-    override fun executeCommand(command: Command<out EntityType, GameContext>) = command.whenCommandIs<PickItemUp> { (context, source, position) ->
+    override fun executeCommand(command: Command<out EntityType, GameContext>) = command.responseWhenCommandIs<PickItemUp> { (context, source, position) ->
         var response: Response = Pass
         val world = context.world
         world.findItemsAt(position).whenHasItems { items ->

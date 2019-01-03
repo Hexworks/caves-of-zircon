@@ -12,7 +12,7 @@ import org.hexworks.zircon.internal.Zircon
 
 object Destroyable : BaseFacet<GameContext>() {
 
-    override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<Destroy> { (context, entity, cause) ->
+    override fun executeCommand(command: GameCommand<out EntityType>) = command.responseWhenCommandIs<Destroy> { (context, entity, cause) ->
         val world = context.world
         entity.whenHasInventory { inventory ->
             world.addEntity(

@@ -12,7 +12,7 @@ import org.hexworks.cavesofzircon.events.PlayerGainedLevel
 import org.hexworks.cavesofzircon.extensions.GameCommand
 import org.hexworks.cavesofzircon.extensions.isPlayer
 import org.hexworks.cavesofzircon.extensions.logGameEvent
-import org.hexworks.cavesofzircon.extensions.whenCommandIs
+import org.hexworks.cavesofzircon.extensions.responseWhenCommandIs
 import org.hexworks.cavesofzircon.world.GameContext
 import org.hexworks.zircon.internal.Zircon
 import kotlin.math.min
@@ -20,7 +20,7 @@ import kotlin.math.min
 
 object ExperienceSystem : BaseFacet<GameContext>() {
 
-    override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<GainXpFrom> { (_, source, gainer) ->
+    override fun executeCommand(command: GameCommand<out EntityType>) = command.responseWhenCommandIs<GainXpFrom> { (_, source, gainer) ->
         val sourceStats = source.combatStats
         val gainerXp = gainer.experience
         val gainerStats = gainer.combatStats

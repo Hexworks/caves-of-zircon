@@ -9,13 +9,13 @@ import org.hexworks.cavesofzircon.commands.LookAt
 import org.hexworks.cavesofzircon.commands.MoveTo
 import org.hexworks.cavesofzircon.extensions.GameCommand
 import org.hexworks.cavesofzircon.extensions.tryActionsOn
-import org.hexworks.cavesofzircon.extensions.whenCommandIs
+import org.hexworks.cavesofzircon.extensions.responseWhenCommandIs
 import org.hexworks.cavesofzircon.extensions.whenHasBlockAt
 import org.hexworks.cavesofzircon.world.GameContext
 
 object Movable : BaseFacet<GameContext>() {
 
-    override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<MoveTo> { (context, entity, position) ->
+    override fun executeCommand(command: GameCommand<out EntityType>) = command.responseWhenCommandIs<MoveTo> { (context, entity, position) ->
         val world = context.world
         var result: Response = Pass
         world.whenHasBlockAt(position) { block ->

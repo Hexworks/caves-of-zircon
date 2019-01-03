@@ -16,7 +16,7 @@ import org.hexworks.cobalt.datatypes.extensions.fold
 
 object Attackable : BaseFacet<GameContext>() {
 
-    override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<Attack> { (context, attacker, target) ->
+    override fun executeCommand(command: GameCommand<out EntityType>) = command.responseWhenCommandIs<Attack> { (context, attacker, target) ->
         if (attacker.isPlayer || target.isPlayer) {
             val attackerEquipment = attacker.equipment
             val attackerStats = attacker.combatStats

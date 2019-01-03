@@ -10,7 +10,7 @@ import org.hexworks.cavesofzircon.world.GameContext
 
 object ItemPicker : BaseFacet<GameContext>() {
 
-    override fun executeCommand(command: GameCommand<out EntityType>) = command.whenCommandIs<PickItemUp> { (context, itemHolder, position) ->
+    override fun executeCommand(command: GameCommand<out EntityType>) = command.responseWhenCommandIs<PickItemUp> { (context, itemHolder, position) ->
         val world = context.world
         world.findItemsAt(position).whenHasItems { items ->
             val item = items.last()

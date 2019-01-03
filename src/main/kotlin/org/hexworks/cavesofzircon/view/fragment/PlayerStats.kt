@@ -39,7 +39,7 @@ class PlayerStats(player: GameEntity<Player>) : Fragment {
                     addComponent(combatStats)
                     addComponent(hunger)
                     addComponent(equipment)
-                    addComponent(zircons)
+                     addComponent(zircons)
                 }
     }
 }
