@@ -4,7 +4,6 @@ import org.hexworks.zircon.api.AppConfigs
 import org.hexworks.zircon.api.CP437TilesetResources
 import org.hexworks.zircon.api.ColorThemes
 import org.hexworks.zircon.api.Sizes
-import java.awt.Toolkit
 
 object GameConfig {
 
@@ -17,14 +16,12 @@ object GameConfig {
     const val SIDEBAR_WIDTH = 18
     const val LOG_AREA_HEIGHT = 8
 
-    private const val SCREEN_SIZE_PERCENT = 0.8
-    private val SCREEN_SIZE = Toolkit.getDefaultToolkit().screenSize
-
     // sizing
-    val WINDOW_WIDTH = SCREEN_SIZE.width.div(TILESET.width).times(SCREEN_SIZE_PERCENT).toInt()
-    val WINDOW_HEIGHT = SCREEN_SIZE.height.div(TILESET.height).times(SCREEN_SIZE_PERCENT).toInt()
-    val VISIBLE_WORLD_WIDTH = WINDOW_WIDTH - SIDEBAR_WIDTH
-    val VISIBLE_WORLD_HEIGHT = WINDOW_HEIGHT - LOG_AREA_HEIGHT
+    const val WINDOW_WIDTH = 80
+    const val WINDOW_HEIGHT = 50
+    const val VISIBLE_WORLD_WIDTH = WINDOW_WIDTH - SIDEBAR_WIDTH
+    const val VISIBLE_WORLD_HEIGHT = WINDOW_HEIGHT - LOG_AREA_HEIGHT
+
     val WORLD_SIZE = Sizes.create3DSize(WINDOW_WIDTH, WINDOW_HEIGHT, DUNGEON_LEVELS)
 
     // entities
