@@ -3,7 +3,7 @@ package org.hexworks.cavesofzircon.view.fragment
 import org.hexworks.cavesofzircon.attributes.types.Player
 import org.hexworks.cavesofzircon.attributes.types.combatStats
 import org.hexworks.cavesofzircon.attributes.types.zirconCounter
-import org.hexworks.cavesofzircon.builders.GameConfig
+import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.extensions.equipment
 import org.hexworks.cavesofzircon.extensions.hunger

@@ -1,6 +1,6 @@
 package org.hexworks.cavesofzircon.view.dialog
 
-import org.hexworks.cavesofzircon.builders.GameConfig
+import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.zircon.api.builder.component.ModalBuilder
 import org.hexworks.zircon.api.component.Container
 import org.hexworks.zircon.api.component.modal.Modal

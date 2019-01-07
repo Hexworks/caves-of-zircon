@@ -2,7 +2,7 @@ package org.hexworks.cavesofzircon.entities
 
 import org.hexworks.amethyst.api.base.BaseEntity
 import org.hexworks.cavesofzircon.attributes.types.DepthEffectType
-import org.hexworks.cavesofzircon.builders.GameConfig
+import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.cavesofzircon.events.EntityDiggedOut
 import org.hexworks.cavesofzircon.extensions.isVisionBlockedAt
 import org.hexworks.cavesofzircon.extensions.isVisionNotBlockedAt

@@ -1,6 +1,6 @@
 package org.hexworks.cavesofzircon.view.fragment
 
-import org.hexworks.cavesofzircon.builders.GameConfig
+import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.component.Fragment
 import org.hexworks.zircon.api.graphics.BoxType

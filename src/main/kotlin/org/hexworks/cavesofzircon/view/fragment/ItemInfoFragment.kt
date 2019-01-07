@@ -3,7 +3,7 @@ package org.hexworks.cavesofzircon.view.fragment
 import org.hexworks.cavesofzircon.attributes.DisplayableAttribute
 import org.hexworks.cavesofzircon.attributes.types.Item
 import org.hexworks.cavesofzircon.attributes.types.iconTile
-import org.hexworks.cavesofzircon.builders.GameConfig
+import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.extensions.attributesOfType
 import org.hexworks.cobalt.databinding.api.extensions.onChange

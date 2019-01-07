@@ -3,7 +3,7 @@ package org.hexworks.cavesofzircon.view.dialog
 import org.hexworks.cavesofzircon.attributes.types.Corpse
 import org.hexworks.cavesofzircon.attributes.types.ItemHolder
 import org.hexworks.cavesofzircon.attributes.types.inventory
-import org.hexworks.cavesofzircon.builders.GameConfig
+import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.extensions.logGameEvent
 import org.hexworks.cavesofzircon.extensions.typeIs

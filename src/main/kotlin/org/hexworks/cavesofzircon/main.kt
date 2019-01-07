@@ -1,6 +1,5 @@
 package org.hexworks.cavesofzircon
 
-import org.hexworks.cavesofzircon.builders.GameConfig
 import org.hexworks.cavesofzircon.view.PlayView
 import org.hexworks.cavesofzircon.view.StartView
 import org.hexworks.zircon.api.*

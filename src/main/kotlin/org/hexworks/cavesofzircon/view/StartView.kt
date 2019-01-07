@@ -1,10 +1,9 @@
 package org.hexworks.cavesofzircon.view
 
-import org.hexworks.cavesofzircon.builders.GameConfig
-import org.hexworks.cavesofzircon.builders.GameConfig.WORLD_SIZE
+import org.hexworks.cavesofzircon.GameConfig
+import org.hexworks.cavesofzircon.GameConfig.WORLD_SIZE
 import org.hexworks.cavesofzircon.world.GameBuilder
 import org.hexworks.zircon.api.Components
-import org.hexworks.zircon.api.component.ColorTheme
 import org.hexworks.zircon.api.component.ComponentAlignment.BOTTOM_CENTER
 import org.hexworks.zircon.api.component.ComponentAlignment.CENTER
 import org.hexworks.zircon.api.graphics.BoxType

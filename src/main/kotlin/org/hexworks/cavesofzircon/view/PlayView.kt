@@ -1,7 +1,7 @@
 package org.hexworks.cavesofzircon.view
 
 import org.hexworks.cavesofzircon.blocks.GameBlock
-import org.hexworks.cavesofzircon.builders.GameConfig
+import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.cavesofzircon.events.GameLogEvent
 import org.hexworks.cavesofzircon.events.PlayerDied
 import org.hexworks.cavesofzircon.events.PlayerGainedLevel
@@ -43,21 +43,17 @@ class PlayView(private val game: Game) : BaseView() {
             root.moveDownBy(header.root.height)
         })
 
-
-        val logPanel = Components.panel()
+        val logArea = Components.logArea()
                 .withSize(GameConfig.WINDOW_WIDTH - GameConfig.SIDEBAR_WIDTH, GameConfig.LOG_AREA_HEIGHT)
                 .withAlignmentWithin(screen, BOTTOM_RIGHT)
                 .wrapWithBox()
                 .withTitle("Log")
-                .build().also { parent ->
-                    val logArea = Components.logArea()
-                            .withSize(parent.size - Sizes.create(2, 2))
-                            .build()
-                    parent.addComponent(logArea)
-                    Zircon.eventBus.subscribe<GameLogEvent> { (text) ->
-                        logArea.addParagraph(text, withNewLine = false, withTypingEffectSpeedInMs = 20)
-                    }
-                }
+                .build()
+
+        Zircon.eventBus.subscribe<GameLogEvent> { (text) ->
+            logArea.addParagraph(text, withNewLine = false, withTypingEffectSpeedInMs = 20)
+        }
+
         val gameComponent = GameComponents.newGameComponentBuilder<Tile, GameBlock>()
                 .withGameArea(game.world)
                 .withVisibleSize(game.visibleSize)
@@ -73,7 +69,7 @@ class PlayView(private val game: Game) : BaseView() {
             close()
         }
         screen.addComponent(sidebar)
-        screen.addComponent(logPanel)
+        screen.addComponent(logArea)
         screen.addComponent(gameComponent)
     }
 }

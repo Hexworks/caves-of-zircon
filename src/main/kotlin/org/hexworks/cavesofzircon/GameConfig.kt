@@ -1,4 +1,4 @@
-package org.hexworks.cavesofzircon.builders
+package org.hexworks.cavesofzircon
 
 import org.hexworks.zircon.api.AppConfigs
 import org.hexworks.zircon.api.CP437TilesetResources
