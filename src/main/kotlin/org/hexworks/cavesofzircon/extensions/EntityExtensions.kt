@@ -19,17 +19,17 @@ import kotlin.reflect.full.isSubclassOf
 import kotlin.reflect.full.isSuperclassOf
 
 var AnyGameEntity.position
-    get() = attribute(EntityPosition::class).orElseThrow {
+    get() = findAttribute(EntityPosition::class).orElseThrow {
         IllegalArgumentException("This Entity has no EntityPosition")
     }.position
     set(value) {
-        attribute(EntityPosition::class).map {
+        findAttribute(EntityPosition::class).map {
             it.position = value
         }
     }
 
 val AnyGameEntity.tile: Tile
-    get() = this.attribute<EntityTile>().tile
+    get() = this.findAttribute<EntityTile>().tile
 
 val AnyGameEntity.occupiesBlock: Boolean
     get() = hasAttribute<BlockOccupier>()
@@ -52,13 +52,13 @@ val AnyGameEntity.isExit: Boolean
 val AnyGameEntity.isStairsDown: Boolean
     get() = this.type is StairsDown
 
-inline fun <reified T : Attribute> AnyGameEntity.attribute(): T = attribute(T::class).orElseThrow {
+inline fun <reified T : Attribute> AnyGameEntity.findAttribute(): T = findAttribute(T::class).orElseThrow {
     NoSuchElementException("Entity '$this' has no property with type '${T::class.simpleName}'.")
 }
 
-inline fun <reified T : Attribute> AnyGameEntity.hasAttribute() = attribute(T::class).isPresent
+inline fun <reified T : Attribute> AnyGameEntity.hasAttribute() = findAttribute(T::class).isPresent
 
-inline fun <reified T : Attribute> AnyGameEntity.whenHasAttribute(crossinline fn: (T) -> Unit) = attribute(T::class).map(fn)
+inline fun <reified T : Attribute> AnyGameEntity.whenHasAttribute(crossinline fn: (T) -> Unit) = findAttribute(T::class).map(fn)
 
 @Suppress("UNCHECKED_CAST")
 inline fun <reified T : EntityType> Iterable<AnyGameEntity>.filterType(): List<Entity<T, GameContext>> {
@@ -69,11 +69,11 @@ fun AnyGameEntity.hasPosition() = position.isUnknown().not()
 
 @Suppress("UNCHECKED_CAST")
 inline fun <reified T : Attribute> AnyGameEntity.attributesOfType(): List<T> {
-    return fetchAttributes().filter { T::class.isSuperclassOf(it::class) }.toList() as List<T>
+    return attributes.filter { T::class.isSuperclassOf(it::class) }.toList() as List<T>
 }
 
 fun AnyGameEntity.tryActionsOn(context: GameContext, target: AnyGameEntity) {
-    attribute<EntityActions>()
+    findAttribute<EntityActions>()
             .createActionsFor(context, this, target)
             .forEach { action ->
                 if (target.executeCommand(action) is Consumed) {

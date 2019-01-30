@@ -4,7 +4,7 @@ import org.hexworks.cavesofzircon.attributes.Inventory
 import org.hexworks.cavesofzircon.attributes.types.Food
 import org.hexworks.cavesofzircon.commands.DropItem
 import org.hexworks.cavesofzircon.commands.Eat
-import org.hexworks.cavesofzircon.extensions.attribute
+import org.hexworks.cavesofzircon.extensions.findAttribute
 import org.hexworks.cavesofzircon.extensions.position
 import org.hexworks.cavesofzircon.extensions.whenTypeIs
 import org.hexworks.cavesofzircon.view.fragment.ItemInfoFragment
@@ -28,7 +28,7 @@ class InventoryDialog(context: GameContext) : Dialog(context.screen) {
             .build().also { inventoryPanel ->
                 val player = context.player
                 val playerPosition = player.position
-                val inventory = player.attribute<Inventory>()
+                val inventory = player.findAttribute<Inventory>()
                 val itemListFragment = ItemListFragment(inventory, 20)
                 inventoryPanel.addFragment(itemListFragment)
                 inventoryPanel.addFragment(ItemInfoFragment(

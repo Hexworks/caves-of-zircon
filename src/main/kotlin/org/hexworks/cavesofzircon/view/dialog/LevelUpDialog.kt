@@ -4,7 +4,7 @@ import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.CombatStats
 import org.hexworks.cavesofzircon.attributes.VisionAttributes
 import org.hexworks.cavesofzircon.extensions.GameEntity
-import org.hexworks.cavesofzircon.extensions.attribute
+import org.hexworks.cavesofzircon.extensions.findAttribute
 import org.hexworks.cavesofzircon.extensions.logGameEvent
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.graphics.BoxType
@@ -26,8 +26,8 @@ class LevelUpDialog(screen: Screen, player: GameEntity<EntityType>) : Dialog(scr
                         .addHeader("Congratulations, you levelled up!")
                         .addParagraph("Pick an improvement from the options below:"))
 
-                val stats = player.attribute<CombatStats>()
-                val vision = player.attribute<VisionAttributes>()
+                val stats = player.findAttribute<CombatStats>()
+                val vision = player.findAttribute<VisionAttributes>()
 
                 modalPanel.addComponent(Components.button()
                         .withText("Max HP")

@@ -3,6 +3,7 @@ package org.hexworks.cavesofzircon.blocks
 import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.builders.GameTileRepository
 import org.hexworks.cavesofzircon.extensions.*
+import org.hexworks.zircon.api.data.Block
 import org.hexworks.zircon.api.data.BlockSide
 import org.hexworks.zircon.api.data.Tile
 import org.hexworks.zircon.api.data.base.BlockBase
@@ -57,6 +58,14 @@ class GameBlock private constructor(private var defaultTile: Tile = GameTileRepo
 
     override fun fetchSide(side: BlockSide): Tile {
         return GameTileRepository.EMPTY
+    }
+
+    override fun createCopy(): Block<Tile> {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    }
+
+    override fun setSide(side: BlockSide, tile: Tile) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     companion object {

@@ -5,7 +5,7 @@ import org.hexworks.cavesofzircon.attributes.Hunger
 import org.hexworks.cavesofzircon.attributes.types.Player
 
 val GameEntity<Player>.hunger: Hunger
-    get() = attribute()
+    get() = findAttribute()
 
 val GameEntity<Player>.equipment: Equipment
-    get() = attribute()
+    get() = findAttribute()

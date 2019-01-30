@@ -4,13 +4,13 @@ import org.hexworks.amethyst.api.entity.EntityType
 import org.hexworks.cavesofzircon.attributes.CombatStats
 import org.hexworks.cavesofzircon.attributes.Experience
 import org.hexworks.cavesofzircon.extensions.GameEntity
-import org.hexworks.cavesofzircon.extensions.attribute
+import org.hexworks.cavesofzircon.extensions.findAttribute
 
 interface ExperienceGainer : EntityType
 
 val GameEntity<ExperienceGainer>.experience: Experience
-    get() = attribute()
+    get() = findAttribute()
 
 val GameEntity<ExperienceGainer>.combatStats: CombatStats
-    get() = attribute()
+    get() = findAttribute()
 

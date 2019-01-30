@@ -1,15 +1,13 @@
 package org.hexworks.cavesofzircon.attributes.types
 
 import org.hexworks.cavesofzircon.attributes.ItemCombatStats
-import org.hexworks.cavesofzircon.extensions.AnyGameEntity
 import org.hexworks.cavesofzircon.extensions.GameEntity
-import org.hexworks.cavesofzircon.extensions.attribute
-import org.hexworks.cavesofzircon.extensions.hasAttribute
+import org.hexworks.cavesofzircon.extensions.findAttribute
 
 interface Weapon : Item
 
 val GameEntity<Weapon>.attackValue: Int
-    get() = attribute<ItemCombatStats>().attackValue
+    get() = findAttribute<ItemCombatStats>().attackValue
 
 val GameEntity<Weapon>.defenseValue: Int
-    get() = attribute<ItemCombatStats>().defenseValue
+    get() = findAttribute<ItemCombatStats>().defenseValue

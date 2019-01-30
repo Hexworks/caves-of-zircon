@@ -34,6 +34,7 @@ object GameConfig {
 
     fun buildAppConfig() = AppConfigs.newConfig()
             .enableBetaFeatures()
+            .withDebugMode(false)
             .withDefaultTileset(TILESET)
             .withSize(Sizes.create(WINDOW_WIDTH, WINDOW_HEIGHT))
             .build()

@@ -67,6 +67,7 @@ object PlayerInputHandler : BaseBehavior<GameContext>() {
                             .firstOrNull { entity ->
                                 entity.hasInventory()
                             }?.let { lootable ->
+                                @Suppress("UNCHECKED_CAST")
                                 openLootDialog(context, player, lootable as GameEntity<ItemHolder>)
                             }
                 }

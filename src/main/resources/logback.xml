@@ -1,0 +1,16 @@
+<configuration>
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+    </root>
+
+    <logger name="org.hexworks.cobalt" level="INFO" />
+    <logger name="org.hexworks.amethyst" level="INFO" />
+    <logger name="org.hexworks.cavesofzircon" level="INFO" />
+
+</configuration>
