@@ -26,7 +26,10 @@ class WorldBuilder(private val worldSize: Size3D) {
                 .addExitStairs()
     }
 
-    fun build(visibleSize: Size3D, worldSize: Size3D): World = World(blocks, visibleSize, worldSize)
+    fun build(visibleSize: Size3D): World = World(
+            startingBlocks = blocks,
+            visibleSize = visibleSize,
+            actualSize = worldSize)
 
     private fun randomizeTiles(): WorldBuilder {
         forAllPositions { pos ->

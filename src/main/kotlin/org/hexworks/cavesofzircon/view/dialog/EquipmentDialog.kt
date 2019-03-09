@@ -11,9 +11,11 @@ import org.hexworks.cavesofzircon.world.GameContext
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.component.Button
+import org.hexworks.zircon.api.extensions.onComponentEvent
 import org.hexworks.zircon.api.graphics.BoxType
 import org.hexworks.zircon.api.graphics.Symbols
-import org.hexworks.zircon.api.kotlin.onMouseReleased
+import org.hexworks.zircon.api.uievent.ComponentEventType
+import org.hexworks.zircon.api.uievent.Processed
 
 class EquipmentDialog(context: GameContext) : Dialog(context.screen) {
 
@@ -39,11 +41,12 @@ class EquipmentDialog(context: GameContext) : Dialog(context.screen) {
                 weapons.forEachIndexed { idx, item ->
                     buildButtonFor(idx + 2, item).apply {
                         equipmentPanel.addComponent(this)
-                        onMouseReleased {
+                        onComponentEvent(ComponentEventType.ACTIVATED) {
                             val newWeapon = weapons[idx]
                             val oldWeapon = equipment.equipWeapon(inventory, newWeapon)
                             weapons[idx] = oldWeapon
                             textProperty.value = "${oldWeapon.name} ${Symbols.GUILLEMET_RIGHT}"
+                            Processed
                         }
                     }
                 }
@@ -53,11 +56,12 @@ class EquipmentDialog(context: GameContext) : Dialog(context.screen) {
                 armors.forEachIndexed { idx, item ->
                     buildButtonFor(idx + weapons.size + 5, item).apply {
                         equipmentPanel.addComponent(this)
-                        onMouseReleased {
+                        onComponentEvent(ComponentEventType.ACTIVATED) {
                             val newArmor = armors[idx]
                             val oldArmor = equipment.equipArmor(inventory, newArmor)
                             armors[idx] = oldArmor
                             textProperty.value = "${oldArmor.name} ${Symbols.GUILLEMET_RIGHT}"
+                            Processed
                         }
                     }
                 }

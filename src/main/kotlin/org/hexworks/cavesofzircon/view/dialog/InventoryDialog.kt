@@ -15,8 +15,10 @@ import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.Sizes
 import org.hexworks.zircon.api.component.ComponentAlignment
+import org.hexworks.zircon.api.extensions.onComponentEvent
 import org.hexworks.zircon.api.graphics.BoxType
-import org.hexworks.zircon.api.kotlin.onMouseReleased
+import org.hexworks.zircon.api.uievent.ComponentEventType
+import org.hexworks.zircon.api.uievent.Processed
 
 class InventoryDialog(context: GameContext) : Dialog(context.screen) {
 
@@ -41,7 +43,7 @@ class InventoryDialog(context: GameContext) : Dialog(context.screen) {
                         .withText("Drop")
                         .withAlignmentWithin(inventoryPanel, ComponentAlignment.BOTTOM_LEFT)
                         .build().apply {
-                            onMouseReleased {
+                            onComponentEvent(ComponentEventType.ACTIVATED) {
                                 itemListFragment.fetchSelectedItem().map { selectedItem ->
                                     itemListFragment.removeSelectedItem()
                                     player.executeCommand(DropItem(
@@ -50,6 +52,7 @@ class InventoryDialog(context: GameContext) : Dialog(context.screen) {
                                             item = selectedItem,
                                             position = playerPosition))
                                 }
+                                Processed
                             }
                         }
 
@@ -57,7 +60,7 @@ class InventoryDialog(context: GameContext) : Dialog(context.screen) {
                         .withText("Eat")
                         .withPosition(Positions.topRightOf(drop).withRelativeX(1))
                         .build().apply {
-                            onMouseReleased {
+                            onComponentEvent(ComponentEventType.ACTIVATED) {
                                 itemListFragment.fetchSelectedItem().map { selectedItem ->
                                     selectedItem.whenTypeIs<Food> { food ->
                                         itemListFragment.removeSelectedItem()
@@ -68,6 +71,7 @@ class InventoryDialog(context: GameContext) : Dialog(context.screen) {
                                                 target = food))
                                     }
                                 }
+                                Processed
                             }
                         }
 

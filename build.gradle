@@ -15,10 +15,10 @@ repositories {
     mavenLocal()
     mavenCentral()
     jcenter()
-    maven { url 'https://jitpack.io' }
+    maven { url "https://jitpack.io" }
 }
 
-apply plugin: 'kotlin'
+apply plugin: "kotlin"
 apply plugin: "com.github.johnrengelman.shadow"
 
 configurations {
@@ -38,7 +38,7 @@ artifacts {
 
 jar {
     manifest {
-        attributes 'Main-Class': "org.hexworks.cavesofzircon.MainKt"
+        attributes "Main-Class": "org.hexworks.cavesofzircon.MainKt"
     }
 }
 
@@ -50,8 +50,8 @@ dependencies {
 
     implementation "org.slf4j:slf4j-api:$slf4j_version"
 
-    implementation 'ch.qos.logback:logback-classic:1.2.3'
-    implementation 'ch.qos.logback:logback-core:1.2.3'
+    implementation "ch.qos.logback:logback-classic:1.2.3"
+    implementation "ch.qos.logback:logback-core:1.2.3"
 
     implementation "org.hexworks.cobalt:cobalt.databinding-jvm:$cobalt_version"
     implementation "org.hexworks.amethyst:amethyst.core-jvm:$amethyst_version"

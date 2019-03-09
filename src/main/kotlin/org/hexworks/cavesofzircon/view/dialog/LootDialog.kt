@@ -1,9 +1,9 @@
 package org.hexworks.cavesofzircon.view.dialog
 
+import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.cavesofzircon.attributes.types.Corpse
 import org.hexworks.cavesofzircon.attributes.types.ItemHolder
 import org.hexworks.cavesofzircon.attributes.types.inventory
-import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.extensions.logGameEvent
 import org.hexworks.cavesofzircon.extensions.typeIs
@@ -12,9 +12,11 @@ import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.Positions
 import org.hexworks.zircon.api.Sizes
 import org.hexworks.zircon.api.component.ComponentAlignment
+import org.hexworks.zircon.api.extensions.onComponentEvent
 import org.hexworks.zircon.api.graphics.BoxType
 import org.hexworks.zircon.api.graphics.Symbols
-import org.hexworks.zircon.api.kotlin.onMouseReleased
+import org.hexworks.zircon.api.uievent.ComponentEventType
+import org.hexworks.zircon.api.uievent.Processed
 
 class LootDialog(context: GameContext,
                  looter: GameEntity<ItemHolder>,
@@ -61,7 +63,7 @@ class LootDialog(context: GameContext,
                             .withPosition(Positions.create(0, index))
                             .build()
                     lootablePanel.addComponent(takeButton)
-                    takeButton.onMouseReleased {
+                    takeButton.onComponentEvent(ComponentEventType.ACTIVATED) {
                         if (inventory.isFull) {
                             logGameEvent("Your inventory is full!")
                         } else {
@@ -77,6 +79,7 @@ class LootDialog(context: GameContext,
                             currentSize++
                             checkEmptyCorpse(lootable, context)
                         }
+                        Processed
                     }
                 }
 

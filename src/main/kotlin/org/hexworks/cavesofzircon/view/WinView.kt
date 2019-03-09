@@ -4,9 +4,11 @@ import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.cavesofzircon.world.GameBuilder
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.component.ComponentAlignment
+import org.hexworks.zircon.api.extensions.onComponentEvent
 import org.hexworks.zircon.api.graphics.BoxType
-import org.hexworks.zircon.api.kotlin.onMouseReleased
 import org.hexworks.zircon.api.mvc.base.BaseView
+import org.hexworks.zircon.api.uievent.ComponentEventType
+import org.hexworks.zircon.api.uievent.Processed
 
 class WinView(private val zircons: Int) : BaseView() {
 
@@ -37,14 +39,16 @@ class WinView(private val zircons: Int) : BaseView() {
                 .withBoxType(BoxType.SINGLE)
                 .build()
 
-        restartButton.onMouseReleased {
+        restartButton.onComponentEvent(ComponentEventType.ACTIVATED) {
             replaceWith(PlayView(GameBuilder(
                     worldSize = GameConfig.WORLD_SIZE).buildGame()))
             close()
+            Processed
         }
 
-        exitButton.onMouseReleased {
+        exitButton.onComponentEvent(ComponentEventType.ACTIVATED) {
             System.exit(0)
+            Processed
         }
 
         screen.addComponent(header)

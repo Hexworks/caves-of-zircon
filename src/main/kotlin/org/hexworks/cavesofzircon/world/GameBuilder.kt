@@ -1,8 +1,6 @@
 package org.hexworks.cavesofzircon.world
 
 import org.hexworks.amethyst.api.entity.EntityType
-import org.hexworks.cavesofzircon.attributes.types.Player
-import org.hexworks.cavesofzircon.builders.EntityFactory
 import org.hexworks.cavesofzircon.GameConfig
 import org.hexworks.cavesofzircon.GameConfig.ARMOR_PER_LEVEL
 import org.hexworks.cavesofzircon.GameConfig.BATS_PER_LEVEL
@@ -10,6 +8,8 @@ import org.hexworks.cavesofzircon.GameConfig.FUNGI_PER_LEVEL
 import org.hexworks.cavesofzircon.GameConfig.ROCKS_PER_LEVEL
 import org.hexworks.cavesofzircon.GameConfig.WEAPONS_PER_LEVEL
 import org.hexworks.cavesofzircon.GameConfig.ZOMBIES_PER_LEVEL
+import org.hexworks.cavesofzircon.attributes.types.Player
+import org.hexworks.cavesofzircon.builders.EntityFactory
 import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.extensions.addAtEmptyPosition
 import org.hexworks.zircon.api.Positions
@@ -18,9 +18,10 @@ import org.hexworks.zircon.api.data.impl.Size3D
 
 class GameBuilder(val worldSize: Size3D) {
 
-    private val worldBuilder = WorldBuilder(worldSize).makeCaves()
     private val visibleSize = Sizes.create3DSize(GameConfig.VISIBLE_WORLD_WIDTH, GameConfig.VISIBLE_WORLD_HEIGHT, 1)
-    val world = worldBuilder.build(visibleSize = visibleSize, worldSize = worldSize)
+    val world = WorldBuilder(worldSize)
+            .makeCaves()
+            .build(visibleSize = visibleSize)
 
     fun buildGame(): Game {
 
@@ -33,7 +34,11 @@ class GameBuilder(val worldSize: Size3D) {
         addRocks()
         addWeapons()
         addArmor()
-        val game = Game(world = world, player = player)
+        val game = Game.create(
+                player = player,
+                worldSize = worldSize,
+                visibleSize = visibleSize,
+                world = world)
         world.addWorldEntity(EntityFactory.newDepthEffect(game))
         world.addWorldEntity(EntityFactory.newFogOfWar(game))
         return game

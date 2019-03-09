@@ -6,9 +6,11 @@ import org.hexworks.cavesofzircon.world.GameBuilder
 import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.component.ComponentAlignment.BOTTOM_CENTER
 import org.hexworks.zircon.api.component.ComponentAlignment.CENTER
+import org.hexworks.zircon.api.extensions.onComponentEvent
 import org.hexworks.zircon.api.graphics.BoxType
-import org.hexworks.zircon.api.kotlin.onMouseReleased
 import org.hexworks.zircon.api.mvc.base.BaseView
+import org.hexworks.zircon.api.uievent.ComponentEventType
+import org.hexworks.zircon.api.uievent.Processed
 
 class StartView : BaseView() {
 
@@ -30,11 +32,12 @@ class StartView : BaseView() {
                 .wrapWithShadow()
                 .wrapWithBox()
                 .build()
-        startButton.onMouseReleased {
+        startButton.onComponentEvent(ComponentEventType.ACTIVATED) {
             val game = GameBuilder(
                     worldSize = WORLD_SIZE).buildGame()
             replaceWith(PlayView(game))
             close()
+            Processed
         }
         screen.addComponent(header)
         screen.addComponent(startButton)

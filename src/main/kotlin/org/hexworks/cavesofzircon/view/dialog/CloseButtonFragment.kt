@@ -5,8 +5,9 @@ import org.hexworks.zircon.api.component.ComponentAlignment
 import org.hexworks.zircon.api.component.Container
 import org.hexworks.zircon.api.component.Fragment
 import org.hexworks.zircon.api.component.modal.Modal
-import org.hexworks.zircon.api.graphics.Symbols
-import org.hexworks.zircon.api.kotlin.onMouseReleased
+import org.hexworks.zircon.api.extensions.onComponentEvent
+import org.hexworks.zircon.api.uievent.ComponentEventType
+import org.hexworks.zircon.api.uievent.Processed
 import org.hexworks.zircon.internal.component.modal.EmptyModalResult
 
 class CloseButtonFragment(modal: Modal<EmptyModalResult>, parent: Container) : Fragment {
@@ -14,8 +15,9 @@ class CloseButtonFragment(modal: Modal<EmptyModalResult>, parent: Container) : F
     override val root = Components.button().withText("Close")
             .withAlignmentWithin(parent, ComponentAlignment.BOTTOM_RIGHT)
             .build().apply {
-                onMouseReleased {
+                onComponentEvent(ComponentEventType.ACTIVATED) {
                     modal.close(EmptyModalResult)
+                    Processed
                 }
             }
 }

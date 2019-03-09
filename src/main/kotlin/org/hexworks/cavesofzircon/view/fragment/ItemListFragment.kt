@@ -16,7 +16,7 @@ import org.hexworks.zircon.api.Components
 import org.hexworks.zircon.api.Tiles
 import org.hexworks.zircon.api.component.Fragment
 import org.hexworks.zircon.api.component.RadioButtonGroup
-import org.hexworks.zircon.api.kotlin.onSelection
+import org.hexworks.zircon.api.extensions.onSelection
 import org.hexworks.zircon.api.resource.BuiltInGraphicTilesetResource
 
 class ItemListFragment(inventory: Inventory, width: Int) : Fragment {

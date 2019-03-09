@@ -5,12 +5,11 @@
         </encoder>
     </appender>
 
-    <root level="debug">
+    <root level="WARN">
         <appender-ref ref="STDOUT" />
     </root>
 
-    <logger name="org.hexworks.cobalt" level="INFO" />
-    <logger name="org.hexworks.amethyst" level="INFO" />
     <logger name="org.hexworks.cavesofzircon" level="INFO" />
+    <logger name="org.hexworks.amethyst" level="DEBUG" />
 
 </configuration>

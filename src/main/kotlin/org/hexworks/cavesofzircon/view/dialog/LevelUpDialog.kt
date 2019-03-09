@@ -7,9 +7,11 @@ import org.hexworks.cavesofzircon.extensions.GameEntity
 import org.hexworks.cavesofzircon.extensions.findAttribute
 import org.hexworks.cavesofzircon.extensions.logGameEvent
 import org.hexworks.zircon.api.Components
+import org.hexworks.zircon.api.extensions.onComponentEvent
 import org.hexworks.zircon.api.graphics.BoxType
-import org.hexworks.zircon.api.kotlin.onMouseReleased
 import org.hexworks.zircon.api.screen.Screen
+import org.hexworks.zircon.api.uievent.ComponentEventType
+import org.hexworks.zircon.api.uievent.Processed
 import org.hexworks.zircon.internal.component.modal.EmptyModalResult
 
 class LevelUpDialog(screen: Screen, player: GameEntity<EntityType>) : Dialog(screen, false) {
@@ -33,10 +35,11 @@ class LevelUpDialog(screen: Screen, player: GameEntity<EntityType>) : Dialog(scr
                         .withText("Max HP")
                         .withPosition(1, 7)
                         .build().apply {
-                            onMouseReleased {
+                            onComponentEvent(ComponentEventType.ACTIVATED) {
                                 stats.maxHpProperty.value += 10
                                 logGameEvent("You look healthier.")
                                 root.close(EmptyModalResult)
+                                Processed
                             }
                         })
 
@@ -45,10 +48,11 @@ class LevelUpDialog(screen: Screen, player: GameEntity<EntityType>) : Dialog(scr
                         .withText("Attack")
                         .withPosition(1, 8)
                         .build().apply {
-                            onMouseReleased {
+                            onComponentEvent(ComponentEventType.ACTIVATED) {
                                 stats.attackValueProperty.value += 2
                                 logGameEvent("You look stronger.")
                                 root.close(EmptyModalResult)
+                                Processed
                             }
                         })
 
@@ -56,10 +60,11 @@ class LevelUpDialog(screen: Screen, player: GameEntity<EntityType>) : Dialog(scr
                         .withText("Defense")
                         .withPosition(1, 9)
                         .build().apply {
-                            onMouseReleased {
+                            onComponentEvent(ComponentEventType.ACTIVATED) {
                                 stats.defenseValueProperty.value += 2
                                 logGameEvent("You look tougher.")
                                 root.close(EmptyModalResult)
+                                Processed
                             }
                         })
 
@@ -67,10 +72,11 @@ class LevelUpDialog(screen: Screen, player: GameEntity<EntityType>) : Dialog(scr
                         .withText("Vision")
                         .withPosition(1, 10)
                         .build().apply {
-                            onMouseReleased {
+                            onComponentEvent(ComponentEventType.ACTIVATED) {
                                 vision.visionRadius++
                                 logGameEvent("You look more aware.")
                                 root.close(EmptyModalResult)
+                                Processed
                             }
                         })
             }
